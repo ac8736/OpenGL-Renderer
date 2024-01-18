@@ -7,15 +7,15 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
 IncludeDir["spdlog"] = "OpenGL-Renderer/vendor/spdlog/include"
---IncludeDir["GLFW"] = "OpenGL-Renderer/vendor/GLFW/include"
---IncludeDir["Glad"] = "OpenGL-Renderer/vendor/Glad/include"
+IncludeDir["GLFW"] = "OpenGL-Renderer/vendor/GLFW/include"
+IncludeDir["Glad"] = "OpenGL-Renderer/vendor/Glad/include"
 --IncludeDir["ImGui"] = "OpenGL-Renderer/vendor/imgui"
 --IncludeDir["glm"] = "OpenGL-Renderer/vendor/glm"
 --IncludeDir["stb_image"] = "OpenGL-Renderer/vendor/stb_image"
 
 group "Dependencies"
-	--include "OpenGL-Renderer/vendor/GLFW"
-	--include "OpenGL-Renderer/vendor/Glad"
+	include "OpenGL-Renderer/vendor/GLFW"
+	include "OpenGL-Renderer/vendor/Glad"
 	--include "OpenGL-Renderer/vendor/imgui"
 group ""
 
@@ -29,8 +29,8 @@ project "OpenGL-Renderer"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("obj/" .. outputdir .. "/%{prj.name}")
 
-	--pchheader "pnpch.h"
-	--pchsource "Phoenix/src/pnpch.cpp"
+	pchheader "glpch.h"
+	pchsource "%{prj.name}/src/glpch.cpp"
 	
 	files { 
 		"%{prj.name}/src/**.h", 
@@ -44,18 +44,18 @@ project "OpenGL-Renderer"
 	includedirs { 
 		"%{IncludeDir.spdlog}",
 		"%{prj.name}/src",
-		--"%{IncludeDir.GLFW}",
-		--"%{IncludeDir.Glad}",
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}",
 		--"%{IncludeDir.ImGui}",
 		--"%{IncludeDir.glm}",
 		--"%{IncludeDir.stb_image}"
 	}
 
 	links {
-		--"Glad",
+		"Glad",
 		--"ImGui",
-		--"GLFW",
-		--"opengl32.lib",
+		"GLFW",
+		"opengl32.lib",
 	}
 
 	filter "system:windows"

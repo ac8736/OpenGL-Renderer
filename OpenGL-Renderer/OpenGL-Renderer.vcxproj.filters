@@ -1,23 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Log">
-      <UniqueIdentifier>{E704880B-530E-887C-DC89-9E7C4892937C}</UniqueIdentifier>
+    <Filter Include="OpenGLRenderer">
+      <UniqueIdentifier>{01F53774-EDC2-2B7A-D656-9CA0C2C307DF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGLRenderer\Log">
+      <UniqueIdentifier>{52A55709-3E89-185F-A7E9-12B293EC02E1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\OpenGLRenderer\Application.h" />
-    <ClInclude Include="src\OpenGLRenderer\EntryPoint.h" />
-    <ClInclude Include="src\OpenGLRenderer\Log\Log.h">
-      <Filter>Log</Filter>
+    <ClInclude Include="src\OpenGLRenderer\Application.h">
+      <Filter>OpenGLRenderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\OpenGLRenderer\OpenGLRenderer.h" />
-    <ClInclude Include="src\OpenGLRenderer\Core.h" />
+    <ClInclude Include="src\OpenGLRenderer\Core.h">
+      <Filter>OpenGLRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OpenGLRenderer\EntryPoint.h">
+      <Filter>OpenGLRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OpenGLRenderer\Log\Log.h">
+      <Filter>OpenGLRenderer\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OpenGLRenderer\OpenGLRenderer.h">
+      <Filter>OpenGLRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\glpch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\OpenGLRenderer\Application.cpp" />
-    <ClCompile Include="src\OpenGLRenderer\Log\Log.cpp">
-      <Filter>Log</Filter>
+    <ClCompile Include="src\OpenGLRenderer\Application.cpp">
+      <Filter>OpenGLRenderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\OpenGLRenderer\Log\Log.cpp">
+      <Filter>OpenGLRenderer\Log</Filter>
+    </ClCompile>
+    <ClCompile Include="src\glpch.cpp" />
   </ItemGroup>
 </Project>
