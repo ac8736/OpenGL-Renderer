@@ -1,38 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="OpenGLRenderer">
-      <UniqueIdentifier>{01F53774-EDC2-2B7A-D656-9CA0C2C307DF}</UniqueIdentifier>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="OpenGLRenderer\Log">
-      <UniqueIdentifier>{52A55709-3E89-185F-A7E9-12B293EC02E1}</UniqueIdentifier>
+    <Filter Include="src\OpenGLRenderer">
+      <UniqueIdentifier>{38151CD2-24F9-DC27-8D59-D77A795CC7A9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\OpenGLRenderer\Log">
+      <UniqueIdentifier>{09092F00-F502-5852-DE6F-EE62CA08BEBE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor">
+      <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\stb_image">
+      <UniqueIdentifier>{0DA0BA59-F998-D9AB-22CB-BE300E23B9B7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\OpenGLRenderer\Application.h">
-      <Filter>OpenGLRenderer</Filter>
+      <Filter>src\OpenGLRenderer</Filter>
     </ClInclude>
     <ClInclude Include="src\OpenGLRenderer\Core.h">
-      <Filter>OpenGLRenderer</Filter>
+      <Filter>src\OpenGLRenderer</Filter>
     </ClInclude>
     <ClInclude Include="src\OpenGLRenderer\EntryPoint.h">
-      <Filter>OpenGLRenderer</Filter>
+      <Filter>src\OpenGLRenderer</Filter>
     </ClInclude>
     <ClInclude Include="src\OpenGLRenderer\Log\Log.h">
-      <Filter>OpenGLRenderer\Log</Filter>
+      <Filter>src\OpenGLRenderer\Log</Filter>
     </ClInclude>
     <ClInclude Include="src\OpenGLRenderer\OpenGLRenderer.h">
-      <Filter>OpenGLRenderer</Filter>
+      <Filter>src\OpenGLRenderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\glpch.h" />
+    <ClInclude Include="src\glpch.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\stb_image\stb_image.h">
+      <Filter>vendor\stb_image</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\OpenGLRenderer\Application.cpp">
-      <Filter>OpenGLRenderer</Filter>
+      <Filter>src\OpenGLRenderer</Filter>
     </ClCompile>
     <ClCompile Include="src\OpenGLRenderer\Log\Log.cpp">
-      <Filter>OpenGLRenderer\Log</Filter>
+      <Filter>src\OpenGLRenderer\Log</Filter>
     </ClCompile>
-    <ClCompile Include="src\glpch.cpp" />
+    <ClCompile Include="src\glpch.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\stb_image\stb_image.cpp">
+      <Filter>vendor\stb_image</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

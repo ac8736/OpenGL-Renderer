@@ -11,7 +11,7 @@ IncludeDir["GLFW"] = "OpenGL-Renderer/vendor/GLFW/include"
 IncludeDir["Glad"] = "OpenGL-Renderer/vendor/Glad/include"
 --IncludeDir["ImGui"] = "OpenGL-Renderer/vendor/imgui"
 --IncludeDir["glm"] = "OpenGL-Renderer/vendor/glm"
---IncludeDir["stb_image"] = "OpenGL-Renderer/vendor/stb_image"
+IncludeDir["stb_image"] = "OpenGL-Renderer/vendor/stb_image"
 
 group "Dependencies"
 	include "OpenGL-Renderer/vendor/GLFW"
@@ -37,8 +37,8 @@ project "OpenGL-Renderer"
 		"%{prj.name}/src/**.cpp",
 		--"%{prj.name}/vendor/glm/glm/**.hpp",
 		--"%{prj.name}/vendor/glm/glm/**.ini",
-		--"%{prj.name}/vendor/stb_image/stb_image.cpp",
-		--"%{prj.name}/vendor/stb_image/stb_image.h"
+		"%{prj.name}/vendor/stb_image/stb_image.cpp",
+		"%{prj.name}/vendor/stb_image/stb_image.h"
 	}
 
 	includedirs { 
@@ -48,7 +48,7 @@ project "OpenGL-Renderer"
 		"%{IncludeDir.Glad}",
 		--"%{IncludeDir.ImGui}",
 		--"%{IncludeDir.glm}",
-		--"%{IncludeDir.stb_image}"
+		"%{IncludeDir.stb_image}"
 	}
 
 	links {
