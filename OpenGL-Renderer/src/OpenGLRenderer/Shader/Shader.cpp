@@ -28,6 +28,11 @@ namespace OpenGLRenderer
 		glDeleteProgram(m_RendererID);
 	}
 
+	void Shader::Bind()
+	{
+		glUseProgram(m_RendererID);
+	}
+
 	ShaderSource Shader::ParseShader(const std::string& filepath)
 	{
 		enum ShaderType

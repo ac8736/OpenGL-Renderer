@@ -4,6 +4,7 @@
 #include "Log/Log.h"
 #include "Shader/Shader.h"
 #include "Buffers/Buffer.h"
+#include "VertexArray/VertexArray.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -46,20 +47,30 @@ namespace OpenGLRenderer
 			-0.5f,  0.5f
 		};
 		
-		VertexBuffer vertexBuffer(positions, 8);
+		BufferLayout layout = {
+			{ ShaderDataType::Float2, "a_Position" }
+		};
+		
+		std::shared_ptr<VertexBuffer> vertexBuffer;
+		vertexBuffer.reset(new VertexBuffer(positions, 8));
 
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), 0);
+		vertexBuffer->SetLayout(layout);
+
+		VertexArray vertexArray = VertexArray();
+		vertexArray.AddVertexBuffer(vertexBuffer);
 
 		unsigned int indices[] = {
 			0, 1, 2, 
 			2, 3, 0,
 		};
 
-		IndexBuffer indexBuffer(indices, 6);
+		std::shared_ptr<IndexBuffer> indexBuffer;
+		indexBuffer.reset(new IndexBuffer(indices, 6));
+
+		vertexArray.SetIndexBuffer(indexBuffer);
 
 		Shader shader = Shader(Shader::ParseShader("res/shaders/Basic.shader"));
-		glUseProgram(shader.GetID());
+		shader.Bind();
 
 		while (!glfwWindowShouldClose(window))
 		{

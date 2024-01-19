@@ -41,6 +41,7 @@
     </ClInclude>
     <ClInclude Include="src\OpenGLRenderer\Shader\Shader.h" />
     <ClInclude Include="src\OpenGLRenderer\Buffers\Buffer.h" />
+    <ClInclude Include="src\OpenGLRenderer\VertexArray\VertexArray.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\OpenGLRenderer\Application.cpp">
@@ -57,5 +58,6 @@
     </ClCompile>
     <ClCompile Include="src\OpenGLRenderer\Shader\Shader.cpp" />
     <ClCompile Include="src\OpenGLRenderer\Buffers\Buffer.cpp" />
+    <ClCompile Include="src\OpenGLRenderer\VertexArray\VertexArray.cpp" />
   </ItemGroup>
 </Project>

@@ -3,6 +3,23 @@
 
 namespace OpenGLRenderer
 {
+	BufferLayout::BufferLayout(const std::initializer_list<BufferElement>& elements) : m_Elements(elements)
+	{
+		CalculateOffsetsAndStride();
+	}
+
+	void BufferLayout::CalculateOffsetsAndStride()
+	{
+		m_Stride = 0;
+		uint32_t offset = 0;
+		for (auto& element : m_Elements)
+		{
+			element.Offset = offset;
+			m_Stride += element.Size;
+			offset += element.Size;
+		}
+	}
+
 	VertexBuffer::VertexBuffer(const float* vertices, unsigned int arrayLength)
 	{
 		glGenBuffers(1, &m_RendererID);

@@ -17,6 +17,8 @@ namespace OpenGLRenderer
 
 		~Shader();
 
+		void Bind();
+
 		const unsigned int GetID() const { return m_RendererID; }
 
 		static ShaderSource ParseShader(const std::string& filepath);
