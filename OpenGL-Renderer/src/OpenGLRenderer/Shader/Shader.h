@@ -17,7 +17,7 @@ namespace OpenGLRenderer
 
 		~Shader();
 
-		void Bind();
+		void Bind() const;
 
 		const unsigned int GetID() const { return m_RendererID; }
 
