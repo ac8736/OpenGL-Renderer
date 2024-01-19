@@ -1,6 +1,7 @@
 #pragma once
 
 #include "OpenGLRenderer/Core.h"
+#include "OpenGLRenderer/Log/Log.h"
 
 #include <glad/glad.h>
 

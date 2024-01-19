@@ -10,7 +10,7 @@ IncludeDir["spdlog"] = "OpenGL-Renderer/vendor/spdlog/include"
 IncludeDir["GLFW"] = "OpenGL-Renderer/vendor/GLFW/include"
 IncludeDir["Glad"] = "OpenGL-Renderer/vendor/Glad/include"
 --IncludeDir["ImGui"] = "OpenGL-Renderer/vendor/imgui"
---IncludeDir["glm"] = "OpenGL-Renderer/vendor/glm"
+IncludeDir["glm"] = "OpenGL-Renderer/vendor/glm"
 IncludeDir["stb_image"] = "OpenGL-Renderer/vendor/stb_image"
 
 group "Dependencies"
@@ -35,8 +35,8 @@ project "OpenGL-Renderer"
 	files { 
 		"%{prj.name}/src/**.h", 
 		"%{prj.name}/src/**.cpp",
-		--"%{prj.name}/vendor/glm/glm/**.hpp",
-		--"%{prj.name}/vendor/glm/glm/**.ini",
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.ini",
 		"%{prj.name}/vendor/stb_image/stb_image.cpp",
 		"%{prj.name}/vendor/stb_image/stb_image.h"
 	}
@@ -47,7 +47,7 @@ project "OpenGL-Renderer"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		--"%{IncludeDir.ImGui}",
-		--"%{IncludeDir.glm}",
+		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}"
 	}
 
@@ -98,7 +98,7 @@ project "Sandbox"
 
 	includedirs { 
 		"%{IncludeDir.spdlog}",
-		--"%{IncludeDir.glm}",
+		"%{IncludeDir.glm}",
 		--"%{IncludeDir.ImGui}",
 		"OpenGL-Renderer/src"
 	}

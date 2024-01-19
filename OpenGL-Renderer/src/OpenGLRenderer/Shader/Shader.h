@@ -1,5 +1,6 @@
 #pragma once
 
+#include <glm/glm.hpp>
 #include <glad/glad.h>
 
 namespace OpenGLRenderer
@@ -20,6 +21,11 @@ namespace OpenGLRenderer
 		void Bind() const;
 
 		const unsigned int GetID() const { return m_RendererID; }
+
+		void UploadUniformFloat1(glm::vec1& vec, const std::string& name);
+		void UploadUniformFloat2(glm::vec2& vec, const std::string& name);
+		void UploadUniformFloat3(glm::vec3& vec, const std::string& name);
+		void UploadUniformFloat4(glm::vec4& vec, const std::string& name);
 
 		static ShaderSource ParseShader(const std::string& filepath);
 	private:
