@@ -140,6 +140,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\OpenGLRenderer\Shader\Shader.h" />
     <ClInclude Include="src\OpenGLRenderer\Application.h" />
     <ClInclude Include="src\OpenGLRenderer\Core.h" />
     <ClInclude Include="src\OpenGLRenderer\EntryPoint.h" />
@@ -149,6 +150,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\OpenGLRenderer\Shader\Shader.cpp" />
     <ClCompile Include="src\OpenGLRenderer\Application.cpp" />
     <ClCompile Include="src\OpenGLRenderer\Log\Log.cpp" />
     <ClCompile Include="src\glpch.cpp">

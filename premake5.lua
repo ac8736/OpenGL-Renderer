@@ -65,7 +65,8 @@ project "OpenGL-Renderer"
 			"PN_PLATFORM_WINDOWS",
 			"PN_BUILD_DLL",
 			"GLFW_INCLUDE_NONE",
-			"_CRT_SECURE_NO_WARNINGS"
+			"_CRT_SECURE_NO_WARNINGS",
+			"ENABLE_ASSERTS"
 		}
 
 	filter "configurations:Debug"
