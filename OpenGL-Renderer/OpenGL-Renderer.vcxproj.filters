@@ -40,6 +40,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\OpenGLRenderer\Shader\Shader.h" />
+    <ClInclude Include="src\OpenGLRenderer\Buffers\Buffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\OpenGLRenderer\Application.cpp">
@@ -55,5 +56,6 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\OpenGLRenderer\Shader\Shader.cpp" />
+    <ClCompile Include="src\OpenGLRenderer\Buffers\Buffer.cpp" />
   </ItemGroup>
 </Project>
