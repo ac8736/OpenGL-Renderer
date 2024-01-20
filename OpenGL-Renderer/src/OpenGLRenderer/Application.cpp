@@ -71,6 +71,7 @@ namespace OpenGLRenderer
 
 		Shader shader = Shader(Shader::ParseShader("res/shaders/Basic.shader"));
 		shader.Bind();
+		shader.UploadUniformFloat3(glm::vec3(1.0f, 1.0f, 1.0f), "u_Color");
 
 		while (!glfwWindowShouldClose(window))
 		{
