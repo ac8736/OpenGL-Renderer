@@ -7,7 +7,9 @@
 #include "VertexArray/VertexArray.h"
 #include "OpenGLRenderer/Renderer.h"
 #include "OpenGLRenderer/Texture/Texture.h"
+#include "OpenGLRenderer/Camera/OrthographicCamera.h"
 
+#include <glm/gtc/matrix_transform.hpp>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -30,7 +32,7 @@ namespace OpenGLRenderer
 			return;
 		}
 
-		GLFWwindow* window = glfwCreateWindow(1280, 720, "Jason is a clown", NULL, NULL);
+		GLFWwindow* window = glfwCreateWindow(880, 880, "OpenGL Renderer", NULL, NULL);
 		if (!window)
 		{
 			// Window or OpenGL context creation failed
@@ -67,9 +69,6 @@ namespace OpenGLRenderer
 			2, 3, 0,
 		};
 
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 		IndexBuffer indexBuffer(indices, 6);
 
 		vertexArray.SetIndexBuffer(indexBuffer);
@@ -79,16 +78,25 @@ namespace OpenGLRenderer
 		shader.UploadUniformFloat3(glm::vec3(1.0f, 1.0f, 1.0f), "u_Color");
 
 		Texture texture("res/textures/texture_test.png");
+		texture.EnableBlend();
 		texture.Bind();
 		shader.UploadUniformInt1(0, "u_Texture");
 
 		Renderer renderer;
 
+		OrthographicCamera camera(-1.0f, 1.0f, 1.0f, -1.0f);
+
 		while (!glfwWindowShouldClose(window))
 		{
-			// Keep running
+			float currentTime = (float)glfwGetTime();
+			Timestep timestamp = currentTime - m_LastFrameTime;
+			m_LastFrameTime = currentTime;
+			float tsSeconds = timestamp.GetSeconds();
+
+			renderer.BeginScene(camera);
 			renderer.Clear();
 			renderer.Draw(vertexArray, indexBuffer, shader);
+			renderer.EndScene();
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();

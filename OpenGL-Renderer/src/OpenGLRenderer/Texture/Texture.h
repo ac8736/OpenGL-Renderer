@@ -17,6 +17,8 @@ namespace OpenGLRenderer
 		inline int GetWidth() const { return m_Width; }
 		inline int GetHeight() const { return m_Height; }
 
+		void EnableBlend() const;
+		void DisableBlend() const;
 	private:
 		unsigned int m_RendererID;
 		std::string m_FilePath;

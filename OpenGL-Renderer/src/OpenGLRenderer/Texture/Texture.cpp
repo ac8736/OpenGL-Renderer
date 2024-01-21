@@ -41,4 +41,15 @@ namespace OpenGLRenderer
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
+
+	void Texture::EnableBlend() const
+	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
+
+	void Texture::DisableBlend() const
+	{
+		glDisable(GL_BLEND);
+	}
 }

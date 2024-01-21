@@ -2,6 +2,7 @@
 #include "Shader.h"
 #include "OpenGLRenderer/Log/Log.h"
 #include <OpenGLRenderer/Core.h>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace OpenGLRenderer
 {
@@ -103,33 +104,39 @@ namespace OpenGLRenderer
 		return id;
 	}
 
-	void Shader::UploadUniformInt1(int i, const std::string& name)
+	void Shader::UploadUniformInt1(int i, const std::string& name) const
 	{
 		int location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform1i(location, i);
 	}
 
-	void Shader::UploadUniformFloat1(float i, const std::string& name)
+	void Shader::UploadUniformFloat1(float i, const std::string& name) const
 	{
 		int location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform1f(location, i);
 	}
 
-	void Shader::UploadUniformFloat2(glm::vec2& vec, const std::string& name)
+	void Shader::UploadUniformFloat2(glm::vec2& vec, const std::string& name) const
 	{
 		int location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform2f(location, vec.x, vec.y);
 	}
 
-	void Shader::UploadUniformFloat3(glm::vec3& vec, const std::string& name)
+	void Shader::UploadUniformFloat3(glm::vec3& vec, const std::string& name) const
 	{
 		int location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform3f(location, vec.x, vec.y, vec.z);
 	}
 
-	void Shader::UploadUniformFloat4(glm::vec4& vec, const std::string& name)
+	void Shader::UploadUniformFloat4(glm::vec4& vec, const std::string& name) const
 	{
 		int location = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform4f(location, vec.x, vec.y, vec.z, vec.w);
+	}
+
+	void Shader::UploadUniformMat4(glm::mat4& mat, const std::string& name) const
+	{
+		int location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(mat));
 	}
 }
