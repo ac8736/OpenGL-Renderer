@@ -3,7 +3,4 @@
   <ItemGroup>
     <ClCompile Include="src\Sandbox.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="res\shaders\Basic.shader" />
-  </ItemGroup>
 </Project>

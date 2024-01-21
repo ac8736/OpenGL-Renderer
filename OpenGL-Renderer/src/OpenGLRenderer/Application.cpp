@@ -6,6 +6,7 @@
 #include "Buffers/Buffer.h"
 #include "VertexArray/VertexArray.h"
 #include "OpenGLRenderer/Renderer.h"
+#include "OpenGLRenderer/Texture/Texture.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -29,7 +30,7 @@ namespace OpenGLRenderer
 			return;
 		}
 
-		GLFWwindow* window = glfwCreateWindow(880, 880, "Jason is a clown", NULL, NULL);
+		GLFWwindow* window = glfwCreateWindow(1280, 720, "Jason is a clown", NULL, NULL);
 		if (!window)
 		{
 			// Window or OpenGL context creation failed
@@ -41,19 +42,20 @@ namespace OpenGLRenderer
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		CORE_ASSERT(status, "Failed to initialize Glad.");
 
-		float positions[4 * 2] = {
-			-0.5f, -0.5f,
-			 0.5f, -0.5f,
-			 0.5f,  0.5f,
-			-0.5f,  0.5f
+		float positions[4 * 4] = {
+			-0.5f, -0.5f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 1.0f, 0.0f,
+			 0.5f,  0.5f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f, 1.0f
 		};
 		
 		BufferLayout layout = {
-			{ ShaderDataType::Float2, "a_Position" }
+			{ ShaderDataType::Float2, "a_Position" },
+			{ ShaderDataType::Float2, "a_TexCoord"}
 		};
 		
 		std::shared_ptr<VertexBuffer> vertexBuffer;
-		vertexBuffer.reset(new VertexBuffer(positions, 8));
+		vertexBuffer.reset(new VertexBuffer(positions, 16));
 
 		vertexBuffer->SetLayout(layout);
 
@@ -65,6 +67,9 @@ namespace OpenGLRenderer
 			2, 3, 0,
 		};
 
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 		IndexBuffer indexBuffer(indices, 6);
 
 		vertexArray.SetIndexBuffer(indexBuffer);
@@ -72,6 +77,10 @@ namespace OpenGLRenderer
 		Shader shader = Shader(Shader::ParseShader("res/shaders/Basic.shader"));
 		shader.Bind();
 		shader.UploadUniformFloat3(glm::vec3(1.0f, 1.0f, 1.0f), "u_Color");
+
+		Texture texture("res/textures/texture_test.png");
+		texture.Bind();
+		shader.UploadUniformInt1(0, "u_Texture");
 
 		Renderer renderer;
 

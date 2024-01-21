@@ -103,10 +103,16 @@ namespace OpenGLRenderer
 		return id;
 	}
 
-	void Shader::UploadUniformFloat1(glm::vec1& vec, const std::string& name)
+	void Shader::UploadUniformInt1(int i, const std::string& name)
 	{
 		int location = glGetUniformLocation(m_RendererID, name.c_str());
-		glUniform1f(location, vec.x);
+		glUniform1i(location, i);
+	}
+
+	void Shader::UploadUniformFloat1(float i, const std::string& name)
+	{
+		int location = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform1f(location, i);
 	}
 
 	void Shader::UploadUniformFloat2(glm::vec2& vec, const std::string& name)

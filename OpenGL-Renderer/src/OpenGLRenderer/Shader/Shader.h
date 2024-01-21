@@ -22,7 +22,9 @@ namespace OpenGLRenderer
 
 		const unsigned int GetID() const { return m_RendererID; }
 
-		void UploadUniformFloat1(glm::vec1& vec, const std::string& name);
+		void UploadUniformInt1(int i, const std::string& name);
+
+		void UploadUniformFloat1(float i, const std::string& name);
 		void UploadUniformFloat2(glm::vec2& vec, const std::string& name);
 		void UploadUniformFloat3(glm::vec3& vec, const std::string& name);
 		void UploadUniformFloat4(glm::vec4& vec, const std::string& name);

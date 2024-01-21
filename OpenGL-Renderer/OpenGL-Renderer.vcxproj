@@ -148,6 +148,7 @@
     <ClInclude Include="src\OpenGLRenderer\OpenGLRenderer.h" />
     <ClInclude Include="src\OpenGLRenderer\Renderer.h" />
     <ClInclude Include="src\OpenGLRenderer\Shader\Shader.h" />
+    <ClInclude Include="src\OpenGLRenderer\Texture\Texture.h" />
     <ClInclude Include="src\OpenGLRenderer\VertexArray\VertexArray.h" />
     <ClInclude Include="src\glpch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -435,6 +436,7 @@
     <ClCompile Include="src\OpenGLRenderer\Log\Log.cpp" />
     <ClCompile Include="src\OpenGLRenderer\Renderer.cpp" />
     <ClCompile Include="src\OpenGLRenderer\Shader\Shader.cpp" />
+    <ClCompile Include="src\OpenGLRenderer\Texture\Texture.cpp" />
     <ClCompile Include="src\OpenGLRenderer\VertexArray\VertexArray.cpp" />
     <ClCompile Include="src\glpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
