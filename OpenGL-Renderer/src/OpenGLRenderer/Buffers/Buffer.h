@@ -91,8 +91,8 @@ namespace OpenGLRenderer
 		VertexBuffer(const float* vertices, unsigned int arrayLength);
 		~VertexBuffer();
 
-		void Bind();
-		void Unbind();
+		void Bind() const;
+		void Unbind() const;
 
 		const BufferLayout& GetLayout() const { return m_Layout; }
 		void SetLayout(const BufferLayout& layout) { m_Layout = layout; };
@@ -106,12 +106,16 @@ namespace OpenGLRenderer
 	class IndexBuffer
 	{
 	public:
+		IndexBuffer() {}
 		IndexBuffer(const unsigned int* indices, unsigned int arrayLength);
 		~IndexBuffer();
 
-		void Bind();
-		void Unbind();
+		int GetCount() const { return m_Count; }
+
+		void Bind() const;
+		void Unbind() const;
 	private:
+		unsigned int m_Count;
 		unsigned int m_RendererID;
 	};
 }

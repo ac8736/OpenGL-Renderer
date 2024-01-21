@@ -32,19 +32,20 @@ namespace OpenGLRenderer
 		glDeleteBuffers(1, &m_RendererID);
 	}
 
-	void VertexBuffer::Bind()
+	void VertexBuffer::Bind() const
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 	}
 
-	void VertexBuffer::Unbind()
+	void VertexBuffer::Unbind() const
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
 	// ----------------------------- //
 
-	IndexBuffer::IndexBuffer(const unsigned int* indices, unsigned int arrayLength)
+	IndexBuffer::IndexBuffer(const unsigned int* indices, unsigned int arrayLength) 
+		: m_Count(arrayLength)
 	{
 		glGenBuffers(1, &m_RendererID);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
@@ -56,12 +57,12 @@ namespace OpenGLRenderer
 		glDeleteBuffers(1, &m_RendererID);
 	}
 
-	void IndexBuffer::Bind()
+	void IndexBuffer::Bind() const
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
 	}
 
-	void IndexBuffer::Unbind()
+	void IndexBuffer::Unbind() const
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}

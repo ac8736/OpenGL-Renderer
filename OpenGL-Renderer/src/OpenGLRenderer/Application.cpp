@@ -5,6 +5,7 @@
 #include "Shader/Shader.h"
 #include "Buffers/Buffer.h"
 #include "VertexArray/VertexArray.h"
+#include "OpenGLRenderer/Renderer.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -64,8 +65,7 @@ namespace OpenGLRenderer
 			2, 3, 0,
 		};
 
-		std::shared_ptr<IndexBuffer> indexBuffer;
-		indexBuffer.reset(new IndexBuffer(indices, 6));
+		IndexBuffer indexBuffer(indices, 6);
 
 		vertexArray.SetIndexBuffer(indexBuffer);
 
@@ -73,11 +73,13 @@ namespace OpenGLRenderer
 		shader.Bind();
 		shader.UploadUniformFloat3(glm::vec3(1.0f, 1.0f, 1.0f), "u_Color");
 
+		Renderer renderer;
+
 		while (!glfwWindowShouldClose(window))
 		{
 			// Keep running
-
-			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+			renderer.Clear();
+			renderer.Draw(vertexArray, indexBuffer, shader);
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();

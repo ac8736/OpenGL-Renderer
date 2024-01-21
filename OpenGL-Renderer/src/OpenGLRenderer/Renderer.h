@@ -9,6 +9,8 @@ namespace OpenGLRenderer
 	class Renderer
 	{
 	public:
+		void Clear();
+
 		void Draw(const VertexArray& vertexArray, const IndexBuffer& indexBuffer, const Shader& shader) const;
 	};
 }
