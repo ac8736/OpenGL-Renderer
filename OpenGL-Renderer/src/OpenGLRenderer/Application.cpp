@@ -9,9 +9,12 @@
 #include "OpenGLRenderer/Texture/Texture.h"
 #include "OpenGLRenderer/Camera/OrthographicCamera.h"
 
+#include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
 
 namespace OpenGLRenderer
 {
@@ -86,6 +89,17 @@ namespace OpenGLRenderer
 
 		OrthographicCamera camera(-1.0f, 1.0f, 1.0f, -1.0f);
 
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
+		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+
+		ImGui_ImplGlfw_InitForOpenGL(window, true);
+		ImGui_ImplOpenGL3_Init("#version 130");
+
 		while (!glfwWindowShouldClose(window))
 		{
 			float currentTime = (float)glfwGetTime();
@@ -98,9 +112,29 @@ namespace OpenGLRenderer
 			renderer.Draw(vertexArray, indexBuffer, shader);
 			renderer.EndScene();
 
+
+			ImGui_ImplOpenGL3_NewFrame();
+			ImGui_ImplGlfw_NewFrame();
+			ImGui::NewFrame();
+
+			ImGui::ShowDemoWindow();
+			
+			ImGui::Render();
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
+				GLFWwindow* backup_current_context = glfwGetCurrentContext();
+				ImGui::UpdatePlatformWindows();
+				ImGui::RenderPlatformWindowsDefault();
+				glfwMakeContextCurrent(backup_current_context);
+			}
+
 			glfwSwapBuffers(window);
 			glfwPollEvents();
 		}
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
+		ImGui::DestroyContext();
 
 		glfwDestroyWindow(window);
 		glfwTerminate();
