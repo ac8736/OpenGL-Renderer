@@ -147,6 +147,7 @@
     <ClInclude Include="src\OpenGLRenderer\Camera\OrthographicCamera.h" />
     <ClInclude Include="src\OpenGLRenderer\Core.h" />
     <ClInclude Include="src\OpenGLRenderer\EntryPoint.h" />
+    <ClInclude Include="src\OpenGLRenderer\Inputs\Input.h" />
     <ClInclude Include="src\OpenGLRenderer\Log\Log.h" />
     <ClInclude Include="src\OpenGLRenderer\OpenGLRenderer.h" />
     <ClInclude Include="src\OpenGLRenderer\Renderer.h" />
@@ -440,6 +441,7 @@
     <ClCompile Include="src\OpenGLRenderer\Buffers\Buffer.cpp" />
     <ClCompile Include="src\OpenGLRenderer\Camera\OrthographicCamera.cpp" />
     <ClCompile Include="src\OpenGLRenderer\ImGui\ImGuiBuild.cpp" />
+    <ClCompile Include="src\OpenGLRenderer\Inputs\Input.cpp" />
     <ClCompile Include="src\OpenGLRenderer\Log\Log.cpp" />
     <ClCompile Include="src\OpenGLRenderer\Renderer.cpp" />
     <ClCompile Include="src\OpenGLRenderer\Shader\Shader.cpp" />

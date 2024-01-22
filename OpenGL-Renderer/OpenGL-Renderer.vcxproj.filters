@@ -928,6 +928,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\OpenGLRenderer\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\OpenGLRenderer\Inputs\Input.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\OpenGLRenderer\Application.cpp">
@@ -962,5 +963,6 @@
     </ClCompile>
     <ClCompile Include="src\OpenGLRenderer\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\OpenGLRenderer\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\OpenGLRenderer\Inputs\Input.cpp" />
   </ItemGroup>
 </Project>

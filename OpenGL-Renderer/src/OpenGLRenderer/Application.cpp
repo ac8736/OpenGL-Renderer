@@ -9,6 +9,7 @@
 #include "OpenGLRenderer/Texture/Texture.h"
 #include "OpenGLRenderer/Camera/OrthographicCamera.h"
 #include "OpenGLRenderer/ImGui/ImGuiLayer.h"
+#include "OpenGLRenderer/Inputs/Input.h"
 
 #include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
@@ -99,11 +100,15 @@ namespace OpenGLRenderer
 			m_LastFrameTime = currentTime;
 			float tsSeconds = timestamp.GetSeconds();
 
+			if (Input::IsKeyPressed(GLFW_KEY_A, window))
+			{
+				CORE_INFO("A is pressed");
+			}
+
 			renderer.BeginScene(camera);
 			renderer.Clear();
 			renderer.Draw(vertexArray, indexBuffer, shader);
 			renderer.EndScene();
-			
 
 			imGuiLayer.BeginImGui();
 
