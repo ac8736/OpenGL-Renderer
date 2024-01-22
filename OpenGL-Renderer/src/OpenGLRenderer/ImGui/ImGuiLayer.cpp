@@ -3,6 +3,17 @@
 
 namespace OpenGLRenderer
 {
+	ImGuiLayer::ImGuiLayer()
+	{
+	}
+
+	ImGuiLayer::~ImGuiLayer()
+	{
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
+		ImGui::DestroyContext();
+	}
+
 	void ImGuiLayer::Init(GLFWwindow* window)
 	{
 		IMGUI_CHECKVERSION();

@@ -9,14 +9,13 @@ namespace OpenGLRenderer
 	class ImGuiLayer
 	{
 	public:
-		ImGuiLayer() {}
+		ImGuiLayer();
+		~ImGuiLayer();
 
 		void Init(GLFWwindow* window);
 
 		void BeginImGui();
 		void EndImGui();
-	private:
-
 	};
 }
 
