@@ -33,9 +33,11 @@ namespace OpenGLRenderer
 
 		static ShaderSource ParseShader(const std::string& filepath);
 	private:
+		int GetLocation(const std::string& name) const;
 		unsigned int CompileShaders(const std::string& source, unsigned int type);
 	private:
 		std::string m_VertexSource, m_FragmentSource;
+		mutable std::unordered_map<std::string, int> m_LocationCache;
 		unsigned int m_RendererID;
 	};
 }

@@ -30,4 +30,3 @@ namespace OpenGLRenderer
 		float m_Rotation;
 	};
 }
-

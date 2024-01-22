@@ -8,13 +8,12 @@
 #include "OpenGLRenderer/Renderer.h"
 #include "OpenGLRenderer/Texture/Texture.h"
 #include "OpenGLRenderer/Camera/OrthographicCamera.h"
+#include "OpenGLRenderer/ImGui/ImGuiLayer.h"
 
 #include <imgui.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <backends/imgui_impl_glfw.h>
-#include <backends/imgui_impl_opengl3.h>
 
 namespace OpenGLRenderer
 {
@@ -44,6 +43,7 @@ namespace OpenGLRenderer
 		}
 
 		glfwMakeContextCurrent(window);
+		glfwSwapInterval(1);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		CORE_ASSERT(status, "Failed to initialize Glad.");
 
@@ -89,16 +89,8 @@ namespace OpenGLRenderer
 
 		OrthographicCamera camera(-1.0f, 1.0f, 1.0f, -1.0f);
 
-		IMGUI_CHECKVERSION();
-		ImGui::CreateContext();
-		ImGuiIO& io = ImGui::GetIO(); (void)io;
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
-		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
-
-		ImGui_ImplGlfw_InitForOpenGL(window, true);
-		ImGui_ImplOpenGL3_Init("#version 130");
+		ImGuiLayer imGuiLayer;
+		imGuiLayer.Init(window);
 
 		while (!glfwWindowShouldClose(window))
 		{
@@ -111,23 +103,13 @@ namespace OpenGLRenderer
 			renderer.Clear();
 			renderer.Draw(vertexArray, indexBuffer, shader);
 			renderer.EndScene();
+			
 
-
-			ImGui_ImplOpenGL3_NewFrame();
-			ImGui_ImplGlfw_NewFrame();
-			ImGui::NewFrame();
+			imGuiLayer.BeginImGui();
 
 			ImGui::ShowDemoWindow();
 			
-			ImGui::Render();
-			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-			if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
-				GLFWwindow* backup_current_context = glfwGetCurrentContext();
-				ImGui::UpdatePlatformWindows();
-				ImGui::RenderPlatformWindowsDefault();
-				glfwMakeContextCurrent(backup_current_context);
-			}
+			imGuiLayer.EndImGui();
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();

@@ -140,6 +140,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\OpenGLRenderer\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\OpenGLRenderer\Application.h" />
     <ClInclude Include="src\OpenGLRenderer\Buffers\Buffer.h" />
     <ClInclude Include="src\OpenGLRenderer\Camera\Camera.h" />
@@ -434,6 +435,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\OpenGLRenderer\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\OpenGLRenderer\Application.cpp" />
     <ClCompile Include="src\OpenGLRenderer\Buffers\Buffer.cpp" />
     <ClCompile Include="src\OpenGLRenderer\Camera\OrthographicCamera.cpp" />
