@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>PN_PLATFORM_WINDOWS;PN_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\OpenGL-Renderer\vendor\spdlog\include;..\OpenGL-Renderer\vendor\glm;..\OpenGL-Renderer\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\OpenGL-Renderer\vendor\spdlog\include;..\OpenGL-Renderer\vendor\glm;..\OpenGL-Renderer\vendor\imgui;..\OpenGL-Renderer\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -95,7 +95,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>PN_PLATFORM_WINDOWS;PN_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\OpenGL-Renderer\vendor\spdlog\include;..\OpenGL-Renderer\vendor\glm;..\OpenGL-Renderer\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\OpenGL-Renderer\vendor\spdlog\include;..\OpenGL-Renderer\vendor\glm;..\OpenGL-Renderer\vendor\imgui;..\OpenGL-Renderer\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -115,7 +115,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>PN_PLATFORM_WINDOWS;PN_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\OpenGL-Renderer\vendor\spdlog\include;..\OpenGL-Renderer\vendor\glm;..\OpenGL-Renderer\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\OpenGL-Renderer\vendor\spdlog\include;..\OpenGL-Renderer\vendor\glm;..\OpenGL-Renderer\vendor\imgui;..\OpenGL-Renderer\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -136,6 +136,9 @@
   <ItemGroup>
     <ProjectReference Include="..\OpenGL-Renderer\OpenGL-Renderer.vcxproj">
       <Project>{6EE3C5FE-DA6E-33C3-E37F-B6B74F8A8FC3}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\OpenGL-Renderer\vendor\imgui\ImGui.vcxproj">
+      <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

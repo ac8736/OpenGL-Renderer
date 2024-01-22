@@ -9,14 +9,14 @@ IncludeDir = {}
 IncludeDir["spdlog"] = "OpenGL-Renderer/vendor/spdlog/include"
 IncludeDir["GLFW"] = "OpenGL-Renderer/vendor/GLFW/include"
 IncludeDir["Glad"] = "OpenGL-Renderer/vendor/Glad/include"
---IncludeDir["ImGui"] = "OpenGL-Renderer/vendor/imgui"
+IncludeDir["ImGui"] = "OpenGL-Renderer/vendor/imgui"
 IncludeDir["glm"] = "OpenGL-Renderer/vendor/glm"
 IncludeDir["stb_image"] = "OpenGL-Renderer/vendor/stb_image"
 
 group "Dependencies"
 	include "OpenGL-Renderer/vendor/GLFW"
 	include "OpenGL-Renderer/vendor/Glad"
-	--include "OpenGL-Renderer/vendor/imgui"
+	include "OpenGL-Renderer/vendor/imgui"
 group ""
 
 project "OpenGL-Renderer"
@@ -46,14 +46,14 @@ project "OpenGL-Renderer"
 		"%{prj.name}/src",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
-		--"%{IncludeDir.ImGui}",
+		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}"
 	}
 
 	links {
 		"Glad",
-		--"ImGui",
+		"ImGui",
 		"GLFW",
 		"opengl32.lib",
 	}
@@ -99,13 +99,13 @@ project "Sandbox"
 	includedirs { 
 		"%{IncludeDir.spdlog}",
 		"%{IncludeDir.glm}",
-		--"%{IncludeDir.ImGui}",
+		"%{IncludeDir.ImGui}",
 		"OpenGL-Renderer/src"
 	}
 
 	links {
 		"OpenGL-Renderer",
-		--"ImGui"
+		"ImGui"
 	}
 
 	filter "system:windows"

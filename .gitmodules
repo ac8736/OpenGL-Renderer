@@ -10,3 +10,6 @@
 [submodule "OpenGL-Renderer/vendor/glm"]
 	path = OpenGL-Renderer/vendor/glm
 	url = https://github.com/g-truc/glm
+[submodule "OpenGL-Renderer/vendor/imgui"]
+	path = OpenGL-Renderer/vendor/imgui
+	url = https://github.com/ac8736/imgui

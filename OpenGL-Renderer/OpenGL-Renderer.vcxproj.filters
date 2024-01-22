@@ -10,11 +10,17 @@
     <Filter Include="src\OpenGLRenderer\Buffers">
       <UniqueIdentifier>{B48C8E2F-A09C-3A00-0956-9F1EF5842999}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\OpenGLRenderer\Camera">
+      <UniqueIdentifier>{B09ACCB4-1C5D-003F-650D-8FCBD10ED91C}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\OpenGLRenderer\Log">
       <UniqueIdentifier>{09092F00-F502-5852-DE6F-EE62CA08BEBE}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\OpenGLRenderer\Shader">
       <UniqueIdentifier>{DE3597DA-4AF8-CA64-93A8-59F1FFA9A342}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\OpenGLRenderer\Texture">
+      <UniqueIdentifier>{98F22175-8402-CE45-EDBB-3264D9EABCDE}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\OpenGLRenderer\VertexArray">
       <UniqueIdentifier>{C46D68CF-B093-3236-99D9-B701859E5702}</UniqueIdentifier>
@@ -51,6 +57,12 @@
     <ClInclude Include="src\OpenGLRenderer\Buffers\Buffer.h">
       <Filter>src\OpenGLRenderer\Buffers</Filter>
     </ClInclude>
+    <ClInclude Include="src\OpenGLRenderer\Camera\Camera.h">
+      <Filter>src\OpenGLRenderer\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OpenGLRenderer\Camera\OrthographicCamera.h">
+      <Filter>src\OpenGLRenderer\Camera</Filter>
+    </ClInclude>
     <ClInclude Include="src\OpenGLRenderer\Core.h">
       <Filter>src\OpenGLRenderer</Filter>
     </ClInclude>
@@ -68,6 +80,12 @@
     </ClInclude>
     <ClInclude Include="src\OpenGLRenderer\Shader\Shader.h">
       <Filter>src\OpenGLRenderer\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OpenGLRenderer\Texture\Texture.h">
+      <Filter>src\OpenGLRenderer\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OpenGLRenderer\Timestep.h">
+      <Filter>src\OpenGLRenderer</Filter>
     </ClInclude>
     <ClInclude Include="src\OpenGLRenderer\VertexArray\VertexArray.h">
       <Filter>src\OpenGLRenderer\VertexArray</Filter>
@@ -909,10 +927,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\OpenGLRenderer\Texture\Texture.h" />
-    <ClInclude Include="src\OpenGLRenderer\Camera\Camera.h" />
-    <ClInclude Include="src\OpenGLRenderer\Camera\OrthographicCamera.h" />
-    <ClInclude Include="src\OpenGLRenderer\Timestep.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\OpenGLRenderer\Application.cpp">
@@ -920,6 +934,9 @@
     </ClCompile>
     <ClCompile Include="src\OpenGLRenderer\Buffers\Buffer.cpp">
       <Filter>src\OpenGLRenderer\Buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpenGLRenderer\Camera\OrthographicCamera.cpp">
+      <Filter>src\OpenGLRenderer\Camera</Filter>
     </ClCompile>
     <ClCompile Include="src\OpenGLRenderer\Log\Log.cpp">
       <Filter>src\OpenGLRenderer\Log</Filter>
@@ -930,6 +947,9 @@
     <ClCompile Include="src\OpenGLRenderer\Shader\Shader.cpp">
       <Filter>src\OpenGLRenderer\Shader</Filter>
     </ClCompile>
+    <ClCompile Include="src\OpenGLRenderer\Texture\Texture.cpp">
+      <Filter>src\OpenGLRenderer\Texture</Filter>
+    </ClCompile>
     <ClCompile Include="src\OpenGLRenderer\VertexArray\VertexArray.cpp">
       <Filter>src\OpenGLRenderer\VertexArray</Filter>
     </ClCompile>
@@ -939,7 +959,6 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\OpenGLRenderer\Texture\Texture.cpp" />
-    <ClCompile Include="src\OpenGLRenderer\Camera\OrthographicCamera.cpp" />
+    <ClCompile Include="src\OpenGLRenderer\ImGui\ImGuiBuild.cpp" />
   </ItemGroup>
 </Project>
