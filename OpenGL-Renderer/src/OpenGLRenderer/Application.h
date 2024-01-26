@@ -2,6 +2,10 @@
 
 #include "Core.h"
 #include "Timestep.h"
+#include "Window.h"
+#include "Framebuffer/Framebuffer.h"
+
+struct GLFWwindow;
 
 namespace OpenGLRenderer
 {
@@ -11,11 +15,14 @@ namespace OpenGLRenderer
 		virtual ~Application();
 
 		void Run();
+		virtual void Update() = 0;
+		virtual void ImGuiUpdate() = 0;
 
-		static inline Application& GetApplication() { return *s_Instance; }
-	private:
-		static Application* s_Instance;
+	protected:
 		float m_LastFrameTime = 0.0f;
+		Window* m_Window;
+	private:
+		float CalculateDeltaTime();
 	};
 
 	Application* CreateApplication();

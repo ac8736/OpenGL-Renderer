@@ -141,6 +141,11 @@
       <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Users\chena\Downloads\Basic.shader" />
+    <None Include="res\shaders\fragment\basic.glsl" />
+    <None Include="res\shaders\vertex\basic.glsl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

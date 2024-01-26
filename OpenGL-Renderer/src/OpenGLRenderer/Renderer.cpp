@@ -1,6 +1,8 @@
 #include "glpch.h"
 #include "Renderer.h"
 
+#include <glad/glad.h>
+
 namespace OpenGLRenderer
 {
 	Renderer::SceneData* Renderer::m_SceneData = new Renderer::SceneData();
@@ -15,19 +17,13 @@ namespace OpenGLRenderer
 
 	}
 
-	void Renderer::Clear()
-	{
-		glClear(GL_COLOR_BUFFER_BIT);
-	}
-
-	void Renderer::Draw(const VertexArray& vertexArray, const IndexBuffer& indexBuffer, const Shader& shader) const
+	void Renderer::Draw(VertexArray& vertexArray, Shader& shader) const
 	{
 		shader.Bind();
 		shader.UploadUniformMat4(m_SceneData->ViewProjectionMatrix, "u_ViewProjectionMatrix");
 
 		vertexArray.Bind();
-		vertexArray.GetIndexBuffer().Bind();
 
-		glDrawElements(GL_TRIANGLES, indexBuffer.GetCount(), GL_UNSIGNED_INT, nullptr);
+		glDrawElements(GL_TRIANGLES, vertexArray.GetIndexBuffer().GetCount(), GL_UNSIGNED_INT, nullptr);
 	}
 }

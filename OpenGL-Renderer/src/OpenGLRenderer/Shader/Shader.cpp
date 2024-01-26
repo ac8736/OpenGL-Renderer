@@ -1,8 +1,10 @@
 #include "glpch.h"
 #include "Shader.h"
 #include "OpenGLRenderer/Log/Log.h"
-#include <OpenGLRenderer/Core.h>
+#include "OpenGLRenderer/Core.h"
+
 #include <glm/gtc/type_ptr.hpp>
+#include <glad/glad.h>
 
 namespace OpenGLRenderer
 {

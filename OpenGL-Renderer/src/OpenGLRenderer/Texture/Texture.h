@@ -1,8 +1,5 @@
 #pragma once
 
-#include <stb_image.h>
-#include <glad/glad.h>
-
 namespace OpenGLRenderer
 {
 	class Texture

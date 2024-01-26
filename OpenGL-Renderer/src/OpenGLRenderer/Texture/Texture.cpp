@@ -1,6 +1,9 @@
 #include "glpch.h"
 #include "Texture.h"
 
+#include <stb_image.h>
+#include <glad/glad.h>
+
 namespace OpenGLRenderer
 {
 	Texture::Texture(const std::string& path)

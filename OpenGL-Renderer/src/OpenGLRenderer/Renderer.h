@@ -13,9 +13,7 @@ namespace OpenGLRenderer
 		void BeginScene(Camera& camera);
 		void EndScene();
 
-		void Clear();
-
-		void Draw(const VertexArray& vertexArray, const IndexBuffer& indexBuffer, const Shader& shader) const;
+		void Draw(VertexArray& vertexArray, Shader& shader) const;
 
 	private:
 		struct SceneData {

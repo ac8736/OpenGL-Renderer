@@ -3,4 +3,9 @@
   <ItemGroup>
     <ClCompile Include="src\Sandbox.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shaders\fragment\basic.glsl" />
+    <None Include="res\shaders\vertex\basic.glsl" />
+    <None Include="..\..\..\Users\chena\Downloads\Basic.shader" />
+  </ItemGroup>
 </Project>

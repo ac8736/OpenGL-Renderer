@@ -3,8 +3,6 @@
 #include "OpenGLRenderer/Core.h"
 #include "OpenGLRenderer/Log/Log.h"
 
-#include <glad/glad.h>
-
 namespace OpenGLRenderer
 {
 	enum class ShaderDataType 
@@ -106,7 +104,7 @@ namespace OpenGLRenderer
 	class IndexBuffer
 	{
 	public:
-		IndexBuffer() {}
+		IndexBuffer() : m_Count(0), m_RendererID(0) {}
 		IndexBuffer(const unsigned int* indices, unsigned int arrayLength);
 		~IndexBuffer();
 

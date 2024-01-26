@@ -1,6 +1,8 @@
 #include "glpch.h"
 #include "Input.h"
 
+#include <GLFW/glfw3.h>
+
 namespace OpenGLRenderer
 {
 	bool Input::IsKeyPressed(int keycode, GLFWwindow* window)

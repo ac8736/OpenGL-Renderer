@@ -1,6 +1,8 @@
 #include "glpch.h"
 #include "Buffer.h"
 
+#include <glad/glad.h>
+
 namespace OpenGLRenderer
 {
 	BufferLayout::BufferLayout(const std::initializer_list<BufferElement>& elements) : m_Elements(elements)
