@@ -39,7 +39,6 @@ namespace OpenGLRenderer
 
 	void Framebuffer::Bind()
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_FramebufferID);
 	}
 

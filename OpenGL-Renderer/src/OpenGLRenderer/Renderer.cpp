@@ -17,13 +17,13 @@ namespace OpenGLRenderer
 
 	}
 
-	void Renderer::Draw(VertexArray& vertexArray, Shader& shader) const
+	void Renderer::Draw(std::shared_ptr<VertexArray>& vertexArray, std::shared_ptr<Shader>& shader) const
 	{
-		shader.Bind();
-		shader.UploadUniformMat4(m_SceneData->ViewProjectionMatrix, "u_ViewProjectionMatrix");
+		shader->Bind();
+		shader->UploadUniformMat4(m_SceneData->ViewProjectionMatrix, "u_ViewProjectionMatrix");
 
-		vertexArray.Bind();
+		vertexArray->Bind();
 
-		glDrawElements(GL_TRIANGLES, vertexArray.GetIndexBuffer().GetCount(), GL_UNSIGNED_INT, nullptr);
+		glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 	}
 }

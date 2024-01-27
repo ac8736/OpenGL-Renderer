@@ -142,7 +142,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\Users\chena\Downloads\Basic.shader" />
     <None Include="res\shaders\fragment\basic.glsl" />
     <None Include="res\shaders\vertex\basic.glsl" />
   </ItemGroup>

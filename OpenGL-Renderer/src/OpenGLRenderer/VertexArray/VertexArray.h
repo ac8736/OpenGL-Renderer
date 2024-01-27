@@ -14,13 +14,13 @@ namespace OpenGLRenderer
 		void Bind() const;
 		void Unbind() const;
 
-		const IndexBuffer& GetIndexBuffer() const;
+		const std::shared_ptr<IndexBuffer>& GetIndexBuffer() const;
 
 		void AddVertexBuffer(std::shared_ptr<OpenGLRenderer::VertexBuffer>& vertexBuffer);
-		void SetIndexBuffer(const IndexBuffer& indexBuffer);
+		void SetIndexBuffer(std::shared_ptr<IndexBuffer>& indexBuffer);
 	private:
 		uint32_t m_RendererID;
 		std::vector<std::shared_ptr<OpenGLRenderer::VertexBuffer>> m_VertexBuffers;
-		IndexBuffer m_IndexBuffer;
+		std::shared_ptr<IndexBuffer> m_IndexBuffer;
 	};
 }

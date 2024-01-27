@@ -13,7 +13,7 @@ namespace OpenGLRenderer
 		void BeginScene(Camera& camera);
 		void EndScene();
 
-		void Draw(VertexArray& vertexArray, Shader& shader) const;
+		void Draw(std::shared_ptr<VertexArray>& vertexArray, std::shared_ptr<Shader>& shader) const;
 
 	private:
 		struct SceneData {

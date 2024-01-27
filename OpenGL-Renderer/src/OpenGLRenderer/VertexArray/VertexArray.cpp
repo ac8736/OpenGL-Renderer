@@ -44,7 +44,7 @@ namespace OpenGLRenderer
         glBindVertexArray(0);
     }
 
-    const IndexBuffer& VertexArray::GetIndexBuffer() const
+    const std::shared_ptr<IndexBuffer>& VertexArray::GetIndexBuffer() const
     {
         return m_IndexBuffer;
     }
@@ -67,10 +67,10 @@ namespace OpenGLRenderer
         m_VertexBuffers.push_back(vertexBuffer);
     }
 
-    void VertexArray::SetIndexBuffer(const IndexBuffer& indexBuffer)
+    void VertexArray::SetIndexBuffer(std::shared_ptr<IndexBuffer>& indexBuffer)
     {
         glBindVertexArray(m_RendererID);
-        indexBuffer.Bind();
+        indexBuffer->Bind();
 
         m_IndexBuffer = indexBuffer;
     }
