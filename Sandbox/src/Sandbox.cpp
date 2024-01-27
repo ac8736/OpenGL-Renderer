@@ -1,5 +1,7 @@
 #include "OpenGLRenderer/OpenGLRenderer.h"
 #include <imgui.h>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 static void ImGui_DrawTriangleMode(bool draw)
 {
@@ -12,6 +14,7 @@ public:
     Sandbox()
         : m_Size(1280, 720),
         m_ViewportSize(1280, 720),
+        m_Transform(glm::mat4(1.0f)),
         m_Renderer(new OpenGLRenderer::Renderer()),
         m_Camera(new OpenGLRenderer::OrthographicCamera(-1.0f, 1.0f, 1.0f, -1.0f)),
         m_Framebuffer(new OpenGLRenderer::Framebuffer(m_Window->GetWidth(), m_Window->GetHeight()))
@@ -55,6 +58,16 @@ public:
 
     void Update() override
     {
+        if (OpenGLRenderer::Input::IsKeyPressed(int('A'), m_Window->GetWindow()))
+        {
+            m_Transform = glm::translate(m_Transform, glm::vec3(-0.1f, 0.0f, 0.0f));
+        }
+
+        if (OpenGLRenderer::Input::IsKeyPressed(int('D'), m_Window->GetWindow()))
+        {
+            m_Transform = glm::translate(m_Transform, glm::vec3(0.1f, 0.0f, 0.0f));
+        }
+
         OpenGLRenderer::RenderCommands::Clear();
         m_Framebuffer->Bind();
 
@@ -62,6 +75,7 @@ public:
         m_Texture->Bind();
         m_Texture->EnableBlend();
         m_Shader->UploadUniformInt1(0, "u_Texture");
+        m_Shader->UploadUniformMat4(m_Transform, "u_Transform");
         m_Renderer->Draw(m_VertexArray, m_Shader);
 
         m_Renderer->EndScene();
@@ -97,6 +111,7 @@ public:
     }
 private:
     glm::vec2 m_Size, m_ViewportSize;
+    glm::mat4 m_Transform;
 
     std::unique_ptr<OpenGLRenderer::Renderer> m_Renderer;
     std::unique_ptr<OpenGLRenderer::Camera> m_Camera;

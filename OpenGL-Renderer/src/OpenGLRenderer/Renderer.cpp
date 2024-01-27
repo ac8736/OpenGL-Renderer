@@ -1,5 +1,6 @@
 #include "glpch.h"
 #include "Renderer.h"
+#include "RenderCommands/RenderCommands.h"
 
 #include <glad/glad.h>
 
@@ -9,6 +10,7 @@ namespace OpenGLRenderer
 
 	void Renderer::BeginScene(Camera& camera)
 	{
+		RenderCommands::Clear();
 		m_SceneData->ViewProjectionMatrix = camera.GetProjectionViewMatrix();
 	}
 
