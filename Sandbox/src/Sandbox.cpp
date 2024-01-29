@@ -3,11 +3,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-static void ImGui_DrawTriangleMode(bool draw)
-{
-    if (!draw) return;
-}
-
 class Sandbox : public OpenGLRenderer::Application 
 {
 public:
@@ -19,19 +14,44 @@ public:
         m_Camera(new OpenGLRenderer::OrthographicCamera(-1.0f, 1.0f, 1.0f, -1.0f)),
         m_Framebuffer(new OpenGLRenderer::Framebuffer(m_Window->GetWidth(), m_Window->GetHeight()))
     {
-        float positions[4 * 4] = {
-            -0.5f, -0.5f, 0.0f, 0.0f,
-             0.5f, -0.5f, 1.0f, 0.0f,
-             0.5f,  0.5f, 1.0f, 1.0f,
-            -0.5f,  0.5f, 0.0f, 1.0f
+        float positions[] = {
+            -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, // 0
+             0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+             0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, // 4
+             0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+             0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+
+            -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // 8
+            -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+             0.5f,  0.5f,  0.5f,  1.0f, 0.0f, // 12
+             0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+             0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+             0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+            -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, // 16
+             0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+             0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+            -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+            -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, // 20
+             0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+             0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+            -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
         };
 
         OpenGLRenderer::BufferLayout layout = {
-            { OpenGLRenderer::ShaderDataType::Float2, "a_Position" },
+            { OpenGLRenderer::ShaderDataType::Float3, "a_Position" },
             { OpenGLRenderer::ShaderDataType::Float2, "a_TexCoord"}
         };
 
-        m_VertexBuffer.reset(new OpenGLRenderer::VertexBuffer(positions, 16));
+        m_VertexBuffer.reset(new OpenGLRenderer::VertexBuffer(positions, sizeof(positions) / sizeof(float)));
         m_VertexBuffer->SetLayout(layout);
 
         m_VertexArray.reset(new OpenGLRenderer::VertexArray());
@@ -40,6 +60,21 @@ public:
         unsigned int indices[] = {
             0, 1, 2,
             2, 3, 0,
+
+            4, 5, 6,
+            6, 7, 4,
+
+            8, 9, 10,
+            10, 11, 8,
+
+            12, 13, 14,
+            14, 15, 12,
+
+            16, 17, 18,
+            18, 19, 16,
+
+            20, 21, 22,
+            22, 23, 20
         };
 
         m_IndexBuffer.reset(new OpenGLRenderer::IndexBuffer(indices, sizeof(indices) / sizeof(float)));
@@ -50,6 +85,20 @@ public:
         m_Shader->UploadUniformFloat3(glm::vec3(1.0f, 1.0f, 1.0f), "u_Color");
 
         m_Texture.reset(new OpenGLRenderer::Texture("res/textures/texture_test.png"));
+
+        m_Model = glm::mat4(1.0f);
+        
+        glm::mat4 view = glm::mat4(1.0f);
+        // note that we're translating the scene in the reverse direction of where we want to move
+        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+        glm::mat4 projection;
+        projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+        
+        m_Shader->UploadUniformMat4(view, "u_View");
+        m_Shader->UploadUniformMat4(projection, "u_Projection");
+        m_Shader->UploadUniformMat4(m_Model, "u_Model");
+
+        OpenGLRenderer::RenderCommands::EnableDepthTest();
     }
     
     ~Sandbox() override 
@@ -68,16 +117,43 @@ public:
             m_Transform = glm::translate(m_Transform, glm::vec3(0.1f, 0.0f, 0.0f));
         }
 
+        glm::vec3 cubePositions[] = {
+            glm::vec3(0.0f,  0.0f,  0.0f),
+            glm::vec3(2.0f,  5.0f, -15.0f),
+            glm::vec3(-1.5f, -2.2f, -2.5f),
+            glm::vec3(-3.8f, -2.0f, -12.3f),
+            glm::vec3(2.4f, -0.4f, -3.5f),
+            glm::vec3(-1.7f,  3.0f, -7.5f),
+            glm::vec3(1.3f, -2.0f, -2.5f),
+            glm::vec3(1.5f,  2.0f, -2.5f),
+            glm::vec3(1.5f,  0.2f, -1.5f),
+            glm::vec3(-1.3f,  1.0f, -1.5f)
+        };
+
         OpenGLRenderer::RenderCommands::Clear();
         m_Framebuffer->Bind();
 
         m_Renderer->BeginScene(*m_Camera);
         m_Texture->Bind();
         m_Texture->EnableBlend();
+
         m_Shader->UploadUniformInt1(0, "u_Texture");
         m_Shader->UploadUniformMat4(m_Transform, "u_Transform");
-        m_Renderer->Draw(m_VertexArray, m_Shader);
 
+        for (size_t i = 0; i < sizeof(cubePositions) / sizeof(glm::vec3); ++i)
+        {
+            m_Model = glm::mat4(1.0f);
+            m_Model = glm::translate(m_Model, cubePositions[i]);
+            float angle = 50.0f * m_LastFrameTime;
+            if (i % 2 == 0)
+                angle *= -1;
+
+            m_Model = glm::rotate(m_Model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+            m_Shader->UploadUniformMat4(m_Model, "u_Model");
+
+            m_Renderer->Draw(m_VertexArray, m_Shader);
+        }
+ 
         m_Renderer->EndScene();
         m_Framebuffer->Unbind();
     }
@@ -105,13 +181,13 @@ public:
         {
             ImGui::Checkbox("Triangles", &triangleDraw);
         }
-        ImGui_DrawTriangleMode(triangleDraw);
 
         ImGui::End();
     }
 private:
     glm::vec2 m_Size, m_ViewportSize;
     glm::mat4 m_Transform;
+    glm::mat4 m_Model;
 
     std::unique_ptr<OpenGLRenderer::Renderer> m_Renderer;
     std::unique_ptr<OpenGLRenderer::Camera> m_Camera;

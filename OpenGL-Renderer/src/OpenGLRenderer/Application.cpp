@@ -31,7 +31,7 @@ namespace OpenGLRenderer
 	{
 		while (!glfwWindowShouldClose(m_Window->GetWindow()))
 		{
-			float tsSeconds = CalculateDeltaTime();
+			CalculateDeltaTime();
 
 			ImGuiLayer::BeginImGui();
 			Update();
@@ -47,12 +47,17 @@ namespace OpenGLRenderer
 		glfwTerminate();
 	}
 
-	float Application::CalculateDeltaTime()
+	void Application::CalculateDeltaTime()
 	{
 		float currentTime = (float)glfwGetTime();
 		Timestep timestamp = currentTime - m_LastFrameTime;
 		m_LastFrameTime = currentTime;
-		return timestamp.GetSeconds();
+		m_DeltaTime = timestamp.GetSeconds();
+	}
+
+	float Application::GetTime()
+	{
+		return (float)glfwGetTime();
 	}
 
 	Application::~Application() 

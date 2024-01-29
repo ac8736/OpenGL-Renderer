@@ -20,9 +20,11 @@ namespace OpenGLRenderer
 
 	protected:
 		float m_LastFrameTime = 0.0f;
+		float m_DeltaTime = 0.0f;
 		Window* m_Window;
-	private:
-		float CalculateDeltaTime();
+
+		float GetTime();
+		void CalculateDeltaTime();
 	};
 
 	Application* CreateApplication();
