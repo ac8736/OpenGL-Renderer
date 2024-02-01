@@ -7,9 +7,9 @@ namespace OpenGLRenderer
 	PerspectiveCamera::PerspectiveCamera(float fov, float aspect, float nearPlane, float farPlane)
 		: m_ProjectionMatrix(glm::mat4(1.0f)),
 		m_ViewMatrix(glm::mat4(1.0f)),
-		m_Fov(fov)
+		m_Fov(fov), m_Aspect(aspect), m_NearPlane(nearPlane), m_FarPlane(farPlane)
 	{
-		m_ProjectionMatrix = glm::perspective(glm::radians(m_Fov), aspect, nearPlane, farPlane);
+		m_ProjectionMatrix = glm::perspective(glm::radians(m_Fov), m_Aspect, m_NearPlane, m_FarPlane);
 		m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_CameraFront, m_CameraUp);
 	}
 
@@ -57,20 +57,28 @@ namespace OpenGLRenderer
 
 	void PerspectiveCamera::UpdateAspect(float aspect)
 	{
-		m_ProjectionMatrix = glm::perspective(glm::radians(m_Fov), aspect, 0.1f, 100.0f);
+		m_Aspect = aspect;
+		m_ProjectionMatrix = glm::perspective(glm::radians(m_Fov), m_Aspect, 0.1f, 100.0f);
 	}
 
-	void PerspectiveCamera::MouseScrollZoom(float yoffset)
+	void PerspectiveCamera::UpdateFov(float fov)
 	{
-		CORE_INFO("CAMERA SCROLL");
-		m_Fov -= yoffset;
+		m_Fov = fov;
+		m_ProjectionMatrix = glm::perspective(glm::radians(m_Fov), m_Aspect, 0.1f, 100.0f);
+	}
+
+	void PerspectiveCamera::MouseScrollZoom(float yoffset, float deltaTime)
+	{
+		m_Fov -= yoffset * deltaTime * 320.0f;
 		if (m_Fov < 1.0f)
 		{
 			m_Fov = 1.0f;
 		}
-		if (m_Fov > 45.0f)
+		if (m_Fov > 90.0f)
 		{
-			m_Fov = 45.0f;
+			m_Fov = 90.0f;
 		}
+
+		UpdateFov(m_Fov);
 	}
 }

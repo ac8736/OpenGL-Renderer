@@ -19,12 +19,19 @@
 
 namespace OpenGLRenderer
 {
+#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
 	Application::Application() : m_Window(new Window(1280, 720))
 	{
 		m_Window->SetVsync(true);
+		m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 		RenderCommands::SetViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
 
 		ImGuiLayer::Init(m_Window->GetWindow());
+	}
+
+	void Application::OnEvent(Event& e)
+	{
+
 	}
 
 	void Application::Run() 

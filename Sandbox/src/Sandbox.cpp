@@ -5,9 +5,12 @@
 
 class Sandbox : public OpenGLRenderer::Application 
 {
+#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
+
 public:
     Sandbox()
         : m_Size(1280, 720),
+        m_Model(glm::mat4(1.0f)),
         m_ViewportSize(1280, 720),
         m_Transform(glm::mat4(1.0f)),
         m_Renderer(new OpenGLRenderer::Renderer()),
@@ -93,6 +96,25 @@ public:
     {
     }
 
+    void OnEvent(OpenGLRenderer::Event& e) override
+    {
+        OpenGLRenderer::EventDispatcher dispatcher(e);
+        dispatcher.Dispatch<OpenGLRenderer::MouseButtonReleasedEvent>(BIND_EVENT_FN(Sandbox::OnMouseButtonRelease));
+        dispatcher.Dispatch<OpenGLRenderer::MouseScrolledEvent>(BIND_EVENT_FN(Sandbox::OnMouseScroll));
+    }
+
+    bool OnMouseScroll(OpenGLRenderer::MouseScrolledEvent& e) const
+    {
+        std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->MouseScrollZoom(e.GetYOffset(), m_DeltaTime);
+        return true;
+    }
+
+    bool OnMouseButtonRelease(OpenGLRenderer::MouseButtonReleasedEvent& e) const
+    {
+        std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->SetFirstMouse(true);
+        return true;
+    }
+
     void Update() override
     {
         glm::vec3 cubePositions[] = {
@@ -109,32 +131,28 @@ public:
         };
 
         const float cameraSpeed = 2.5f * m_DeltaTime;
-        if (OpenGLRenderer::Input::IsKeyPressed(int('W'), m_Window->GetWindow()))
+        if (OpenGLRenderer::Input::IsKeyPressed(KEY_W, m_Window->GetWindow()))
             std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
                 ->SetPosition(m_Camera->GetPosition() + cameraSpeed * std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraFront());
 
-        if (OpenGLRenderer::Input::IsKeyPressed(int('S'), m_Window->GetWindow()))
+        if (OpenGLRenderer::Input::IsKeyPressed(KEY_S, m_Window->GetWindow()))
             std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
                 ->SetPosition(m_Camera->GetPosition() - cameraSpeed * std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraFront());
 
-        if (OpenGLRenderer::Input::IsKeyPressed(int('A'), m_Window->GetWindow()))
+        if (OpenGLRenderer::Input::IsKeyPressed(KEY_A, m_Window->GetWindow()))
             std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
                 ->SetPosition(m_Camera->GetPosition() - glm::normalize(glm::cross(std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraFront(),
                     std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraUp())) * cameraSpeed);
 
-        if (OpenGLRenderer::Input::IsKeyPressed(int('D'), m_Window->GetWindow()))
+        if (OpenGLRenderer::Input::IsKeyPressed(KEY_D, m_Window->GetWindow()))
             std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
                 ->SetPosition(m_Camera->GetPosition() + glm::normalize(glm::cross(std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraFront(), 
                     std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraUp())) * cameraSpeed);
 
-        if (OpenGLRenderer::Input::IsMousePressed(0, m_Window->GetWindow()))
+        if (OpenGLRenderer::Input::IsMousePressed(MOUSE_BUTTON_1, m_Window->GetWindow()))
         {
             std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
                 ->MouseMovement(OpenGLRenderer::Input::GetMousePosX(m_Window->GetWindow()), OpenGLRenderer::Input::GetMousePosY(m_Window->GetWindow()));
-        }
-        else
-        {
-            std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->SetFirstMouse(true);
         }
 
         OpenGLRenderer::RenderCommands::Clear();

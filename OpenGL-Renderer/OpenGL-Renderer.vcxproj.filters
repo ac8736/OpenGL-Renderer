@@ -930,6 +930,8 @@
     <ClInclude Include="src\OpenGLRenderer\Window.h" />
     <ClInclude Include="src\OpenGLRenderer\Framebuffer\Framebuffer.h" />
     <ClInclude Include="src\OpenGLRenderer\Camera\PerspectiveCamera.h" />
+    <ClInclude Include="src\OpenGLRenderer\KeyCodes.h" />
+    <ClInclude Include="src\OpenGLRenderer\MouseCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\OpenGLRenderer\Application.cpp">

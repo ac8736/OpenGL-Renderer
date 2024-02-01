@@ -19,10 +19,12 @@ namespace OpenGLRenderer
 		
 		void SetPosition(glm::vec3& pos) { m_Position = pos; CalculateViewMatrix(); }
 
-		void PerspectiveCamera::UpdateAspect(float aspect);
+		void UpdateAspect(float aspect);
+		void UpdateFov(float fov);
+
 		void SetFirstMouse(bool set) { m_FirstMouse = set; }
 		void MouseMovement(float xpos, float ypos);
-		void MouseScrollZoom(float yoffset);
+		void MouseScrollZoom(float yoffset, float deltaTime);
 	private:
 		void CalculateViewMatrix();
 
@@ -37,6 +39,7 @@ namespace OpenGLRenderer
 		float m_Pitch = 0.0f, m_Yaw = -90.0f;
 		bool m_FirstMouse = true;
 
-		float m_ScrollY = 0.0f, m_Fov = 45.0f;
+		float m_ScrollY = 0.0f;
+		float m_Fov, m_Aspect, m_NearPlane, m_FarPlane;
 	};
 }

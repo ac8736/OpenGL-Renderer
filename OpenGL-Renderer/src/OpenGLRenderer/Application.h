@@ -18,6 +18,7 @@ namespace OpenGLRenderer
 		virtual void Update() = 0;
 		virtual void ImGuiUpdate() = 0;
 
+		virtual void OnEvent(Event& e);
 	protected:
 		float m_LastFrameTime = 0.0f;
 		float m_DeltaTime = 0.0f;

@@ -149,7 +149,9 @@
     <ClInclude Include="src\OpenGLRenderer\Camera\OrthographicCamera.h" />
     <ClInclude Include="src\OpenGLRenderer\Core.h" />
     <ClInclude Include="src\OpenGLRenderer\Inputs\Input.h" />
+    <ClInclude Include="src\OpenGLRenderer\KeyCodes.h" />
     <ClInclude Include="src\OpenGLRenderer\Log\Log.h" />
+    <ClInclude Include="src\OpenGLRenderer\MouseCodes.h" />
     <ClInclude Include="src\OpenGLRenderer\OpenGLRenderer.h" />
     <ClInclude Include="src\OpenGLRenderer\RenderCommands\RenderCommands.h" />
     <ClInclude Include="src\OpenGLRenderer\Renderer.h" />

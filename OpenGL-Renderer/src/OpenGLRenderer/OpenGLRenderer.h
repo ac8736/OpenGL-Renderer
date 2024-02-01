@@ -22,4 +22,13 @@
 
 // --------- Input --------- //
 #include "Inputs/Input.h"
+#include "KeyCodes.h"
+#include "MouseCodes.h"
 // --------- Input --------- //
+
+// --------- Event --------- //
+#include "Events/Event.h"
+#include "Events/ApplicationEvent.h"
+#include "Events/KeyEvent.h"
+#include "Events/MouseEvent.h"
+// --------- Event --------- //
