@@ -26,10 +26,6 @@ namespace OpenGLRenderer
 		glfwMakeContextCurrent(m_Window);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		CORE_ASSERT(status, "Failed to initialize Glad.");
-
-		glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) {
-			RenderCommands::SetViewport(0, 0, width, height);
-		});
 	}
 
 	void Window::SetVsync(bool set)

@@ -10,7 +10,6 @@ namespace OpenGLRenderer
 	public:
 		virtual const glm::mat4& GetProjectionMatrix() const = 0;
 		virtual const glm::mat4& GetViewMatrix() const = 0;
-		virtual const glm::mat4& GetProjectionViewMatrix() const = 0;
 
 		virtual const glm::vec3& GetPosition() const = 0;
 		virtual const float GetRotation() const = 0;

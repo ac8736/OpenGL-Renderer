@@ -16,4 +16,18 @@ namespace OpenGLRenderer
 		int state = glfwGetMouseButton(window, mousecode);
 		return state == GLFW_PRESS;
 	}
+
+	float Input::GetMousePosX(GLFWwindow* window)
+	{
+		double x, y;
+		glfwGetCursorPos(window, &x, &y);
+		return (float)x;
+	}
+
+	float Input::GetMousePosY(GLFWwindow* window)
+	{
+		double x, y;
+		glfwGetCursorPos(window, &x, &y);
+		return (float)y;
+	}
 }

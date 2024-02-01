@@ -127,6 +127,16 @@ public:
                 ->SetPosition(m_Camera->GetPosition() + glm::normalize(glm::cross(std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraFront(), 
                     std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraUp())) * cameraSpeed);
 
+        if (OpenGLRenderer::Input::IsMousePressed(0, m_Window->GetWindow()))
+        {
+            std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
+                ->MouseMovement(OpenGLRenderer::Input::GetMousePosX(m_Window->GetWindow()), OpenGLRenderer::Input::GetMousePosY(m_Window->GetWindow()));
+        }
+        else
+        {
+            std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->SetFirstMouse(true);
+        }
+
         OpenGLRenderer::RenderCommands::Clear();
         m_Framebuffer->Bind();
 
