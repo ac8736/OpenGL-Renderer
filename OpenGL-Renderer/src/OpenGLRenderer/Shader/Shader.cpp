@@ -127,22 +127,22 @@ namespace OpenGLRenderer
 		glUniform1f(GetLocation(name), i);
 	}
 
-	void Shader::UploadUniformFloat2(glm::vec2& vec, const std::string& name) const
+	void Shader::UploadUniformFloat2(const glm::vec2& vec, const std::string& name) const
 	{
 		glUniform2f(GetLocation(name), vec.x, vec.y);
 	}
 
-	void Shader::UploadUniformFloat3(glm::vec3& vec, const std::string& name) const
+	void Shader::UploadUniformFloat3(const glm::vec3& vec, const std::string& name) const
 	{
 		glUniform3f(GetLocation(name), vec.x, vec.y, vec.z);
 	}
 
-	void Shader::UploadUniformFloat4(glm::vec4& vec, const std::string& name) const
+	void Shader::UploadUniformFloat4(const glm::vec4& vec, const std::string& name) const
 	{
 		glUniform4f(GetLocation(name), vec.x, vec.y, vec.z, vec.w);
 	}
 
-	void Shader::UploadUniformMat4(glm::mat4& mat, const std::string& name) const
+	void Shader::UploadUniformMat4(const glm::mat4& mat, const std::string& name) const
 	{
 		glUniformMatrix4fv(GetLocation(name), 1, GL_FALSE, glm::value_ptr(mat));
 	}

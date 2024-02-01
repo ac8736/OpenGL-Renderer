@@ -17,6 +17,7 @@
 // --------- Cameras --------- //
 #include "Camera/Camera.h"
 #include "Camera/OrthographicCamera.h"
+#include "Camera/PerspectiveCamera.h"
 // --------- Cameras --------- //
 
 // --------- Input --------- //

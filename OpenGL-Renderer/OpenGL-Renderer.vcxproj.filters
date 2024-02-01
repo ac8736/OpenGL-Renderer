@@ -929,6 +929,7 @@
     <ClInclude Include="src\OpenGLRenderer\RenderCommands\RenderCommands.h" />
     <ClInclude Include="src\OpenGLRenderer\Window.h" />
     <ClInclude Include="src\OpenGLRenderer\Framebuffer\Framebuffer.h" />
+    <ClInclude Include="src\OpenGLRenderer\Camera\PerspectiveCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\OpenGLRenderer\Application.cpp">
@@ -967,5 +968,6 @@
     <ClCompile Include="src\OpenGLRenderer\RenderCommands\RenderCommands.cpp" />
     <ClCompile Include="src\OpenGLRenderer\Window.cpp" />
     <ClCompile Include="src\OpenGLRenderer\Framebuffer\Framebuffer.cpp" />
+    <ClCompile Include="src\OpenGLRenderer\Camera\PerspectiveCamera.cpp" />
   </ItemGroup>
 </Project>

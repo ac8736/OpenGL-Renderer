@@ -11,7 +11,8 @@ namespace OpenGLRenderer
 	void Renderer::BeginScene(Camera& camera)
 	{
 		RenderCommands::Clear();
-		m_SceneData->ViewProjectionMatrix = camera.GetProjectionViewMatrix();
+		m_SceneData->ViewMatrix = camera.GetViewMatrix();
+		m_SceneData->ProjectionMatrix = camera.GetProjectionMatrix();
 	}
 
 	void Renderer::EndScene()
@@ -22,7 +23,8 @@ namespace OpenGLRenderer
 	void Renderer::Draw(std::shared_ptr<VertexArray>& vertexArray, std::shared_ptr<Shader>& shader) const
 	{
 		shader->Bind();
-		// shader->UploadUniformMat4(m_SceneData->ViewProjectionMatrix, "u_ViewProjectionMatrix");
+		shader->UploadUniformMat4(m_SceneData->ViewMatrix, "u_View");
+		shader->UploadUniformMat4(m_SceneData->ProjectionMatrix, "u_Projection");
 
 		vertexArray->Bind();
 

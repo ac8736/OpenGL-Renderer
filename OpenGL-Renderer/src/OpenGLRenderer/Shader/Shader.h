@@ -24,11 +24,11 @@ namespace OpenGLRenderer
 		void UploadUniformInt1(int i, const std::string& name) const;
 
 		void UploadUniformFloat1(float i, const std::string& name) const;
-		void UploadUniformFloat2(glm::vec2& vec, const std::string& name) const;
-		void UploadUniformFloat3(glm::vec3& vec, const std::string& name) const;
-		void UploadUniformFloat4(glm::vec4& vec, const std::string& name) const;
+		void UploadUniformFloat2(const glm::vec2& vec, const std::string& name) const;
+		void UploadUniformFloat3(const glm::vec3& vec, const std::string& name) const;
+		void UploadUniformFloat4(const glm::vec4& vec, const std::string& name) const;
 
-		void UploadUniformMat4(glm::mat4& mat, const std::string& name) const;
+		void UploadUniformMat4(const glm::mat4& mat, const std::string& name) const;
 
 		static ShaderSource ParseShader(const std::string& filepath);
 	private:

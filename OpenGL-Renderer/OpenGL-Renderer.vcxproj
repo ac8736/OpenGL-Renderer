@@ -140,6 +140,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\OpenGLRenderer\Camera\PerspectiveCamera.h" />
     <ClInclude Include="src\OpenGLRenderer\Framebuffer\Framebuffer.h" />
     <ClInclude Include="src\OpenGLRenderer\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\OpenGLRenderer\Application.h" />
@@ -438,6 +439,7 @@
     <ClInclude Include="src\OpenGLRenderer\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\OpenGLRenderer\Camera\PerspectiveCamera.cpp" />
     <ClCompile Include="src\OpenGLRenderer\Framebuffer\Framebuffer.cpp" />
     <ClCompile Include="src\OpenGLRenderer\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\OpenGLRenderer\Application.cpp" />

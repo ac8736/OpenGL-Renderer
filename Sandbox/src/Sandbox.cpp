@@ -11,7 +11,7 @@ public:
         m_ViewportSize(1280, 720),
         m_Transform(glm::mat4(1.0f)),
         m_Renderer(new OpenGLRenderer::Renderer()),
-        m_Camera(new OpenGLRenderer::OrthographicCamera(-1.0f, 1.0f, 1.0f, -1.0f)),
+        m_Camera(new OpenGLRenderer::PerspectiveCamera(45.0f, 800.0f / 600.0f, 0.1f, 100.0f)),
         m_Framebuffer(new OpenGLRenderer::Framebuffer(m_Window->GetWidth(), m_Window->GetHeight()))
     {
         float positions[] = {
@@ -86,14 +86,6 @@ public:
 
         m_Texture.reset(new OpenGLRenderer::Texture("res/textures/texture_test.png"));
 
-        m_Model = glm::mat4(1.0f);
-        
-        glm::mat4 projection;
-        projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-        
-        m_Shader->UploadUniformMat4(projection, "u_Projection");
-        m_Shader->UploadUniformMat4(m_Model, "u_Model");
-
         OpenGLRenderer::RenderCommands::EnableDepthTest();
     }
     
@@ -116,20 +108,24 @@ public:
             glm::vec3(-1.3f,  1.0f, -1.5f)
         };
 
-        glm::mat4 view;
-        view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-
         const float cameraSpeed = 2.5f * m_DeltaTime;
         if (OpenGLRenderer::Input::IsKeyPressed(int('W'), m_Window->GetWindow()))
-            cameraPos += cameraSpeed * cameraFront;
-        if (OpenGLRenderer::Input::IsKeyPressed(int('S'), m_Window->GetWindow()))
-            cameraPos -= cameraSpeed * cameraFront;
-        if (OpenGLRenderer::Input::IsKeyPressed(int('A'), m_Window->GetWindow()))
-            cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-        if (OpenGLRenderer::Input::IsKeyPressed(int('D'), m_Window->GetWindow()))
-            cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+            std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
+                ->SetPosition(m_Camera->GetPosition() + cameraSpeed * std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraFront());
 
-        m_Shader->UploadUniformMat4(view, "u_View");
+        if (OpenGLRenderer::Input::IsKeyPressed(int('S'), m_Window->GetWindow()))
+            std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
+                ->SetPosition(m_Camera->GetPosition() - cameraSpeed * std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraFront());
+
+        if (OpenGLRenderer::Input::IsKeyPressed(int('A'), m_Window->GetWindow()))
+            std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
+                ->SetPosition(m_Camera->GetPosition() - glm::normalize(glm::cross(std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraFront(),
+                    std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraUp())) * cameraSpeed);
+
+        if (OpenGLRenderer::Input::IsKeyPressed(int('D'), m_Window->GetWindow()))
+            std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
+                ->SetPosition(m_Camera->GetPosition() + glm::normalize(glm::cross(std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraFront(), 
+                    std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraUp())) * cameraSpeed);
 
         OpenGLRenderer::RenderCommands::Clear();
         m_Framebuffer->Bind();
@@ -191,7 +187,6 @@ private:
     glm::mat4 m_Model;
 
     std::unique_ptr<OpenGLRenderer::Renderer> m_Renderer;
-    std::unique_ptr<OpenGLRenderer::Camera> m_Camera;
     std::unique_ptr<OpenGLRenderer::Framebuffer> m_Framebuffer;
 
     std::shared_ptr<OpenGLRenderer::VertexArray> m_VertexArray;
@@ -200,9 +195,7 @@ private:
     std::shared_ptr<OpenGLRenderer::IndexBuffer> m_IndexBuffer;
     std::shared_ptr<OpenGLRenderer::Shader> m_Shader;
 
-    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-    glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-    glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+    std::shared_ptr<OpenGLRenderer::Camera> m_Camera;
 };
 
 OpenGLRenderer::Application* OpenGLRenderer::CreateApplication() { return new Sandbox(); }
