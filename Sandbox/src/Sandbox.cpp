@@ -88,13 +88,9 @@ public:
 
         m_Model = glm::mat4(1.0f);
         
-        glm::mat4 view = glm::mat4(1.0f);
-        // note that we're translating the scene in the reverse direction of where we want to move
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
         glm::mat4 projection;
         projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
         
-        m_Shader->UploadUniformMat4(view, "u_View");
         m_Shader->UploadUniformMat4(projection, "u_Projection");
         m_Shader->UploadUniformMat4(m_Model, "u_Model");
 
@@ -107,16 +103,6 @@ public:
 
     void Update() override
     {
-        if (OpenGLRenderer::Input::IsKeyPressed(int('A'), m_Window->GetWindow()))
-        {
-            m_Transform = glm::translate(m_Transform, glm::vec3(-0.1f, 0.0f, 0.0f));
-        }
-
-        if (OpenGLRenderer::Input::IsKeyPressed(int('D'), m_Window->GetWindow()))
-        {
-            m_Transform = glm::translate(m_Transform, glm::vec3(0.1f, 0.0f, 0.0f));
-        }
-
         glm::vec3 cubePositions[] = {
             glm::vec3(0.0f,  0.0f,  0.0f),
             glm::vec3(2.0f,  5.0f, -15.0f),
@@ -129,6 +115,21 @@ public:
             glm::vec3(1.5f,  0.2f, -1.5f),
             glm::vec3(-1.3f,  1.0f, -1.5f)
         };
+
+        glm::mat4 view;
+        view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+
+        const float cameraSpeed = 2.5f * m_DeltaTime;
+        if (OpenGLRenderer::Input::IsKeyPressed(int('W'), m_Window->GetWindow()))
+            cameraPos += cameraSpeed * cameraFront;
+        if (OpenGLRenderer::Input::IsKeyPressed(int('S'), m_Window->GetWindow()))
+            cameraPos -= cameraSpeed * cameraFront;
+        if (OpenGLRenderer::Input::IsKeyPressed(int('A'), m_Window->GetWindow()))
+            cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+        if (OpenGLRenderer::Input::IsKeyPressed(int('D'), m_Window->GetWindow()))
+            cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+
+        m_Shader->UploadUniformMat4(view, "u_View");
 
         OpenGLRenderer::RenderCommands::Clear();
         m_Framebuffer->Bind();
@@ -198,6 +199,10 @@ private:
     std::shared_ptr<OpenGLRenderer::VertexBuffer> m_VertexBuffer;
     std::shared_ptr<OpenGLRenderer::IndexBuffer> m_IndexBuffer;
     std::shared_ptr<OpenGLRenderer::Shader> m_Shader;
+
+    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+    glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+    glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 };
 
 OpenGLRenderer::Application* OpenGLRenderer::CreateApplication() { return new Sandbox(); }
