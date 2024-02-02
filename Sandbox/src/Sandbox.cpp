@@ -57,8 +57,11 @@ public:
         m_VertexBuffer.reset(new OpenGLRenderer::VertexBuffer(positions, sizeof(positions) / sizeof(float)));
         m_VertexBuffer->SetLayout(layout);
 
-        m_VertexArray.reset(new OpenGLRenderer::VertexArray());
-        m_VertexArray->AddVertexBuffer(m_VertexBuffer);
+        m_VertexArrayMaterial.reset(new OpenGLRenderer::VertexArray());
+        m_VertexArrayMaterial->AddVertexBuffer(m_VertexBuffer);
+
+        m_VertexArrayLight.reset(new OpenGLRenderer::VertexArray());
+        m_VertexArrayLight->AddVertexBuffer(m_VertexBuffer);
 
         unsigned int indices[] = {
             0, 1, 2,
@@ -81,7 +84,8 @@ public:
         };
 
         m_IndexBuffer.reset(new OpenGLRenderer::IndexBuffer(indices, sizeof(indices) / sizeof(float)));
-        m_VertexArray->SetIndexBuffer(m_IndexBuffer);
+        m_VertexArrayMaterial->SetIndexBuffer(m_IndexBuffer);
+        m_VertexArrayLight->SetIndexBuffer(m_IndexBuffer);
 
         m_ShaderMaterial.reset(new OpenGLRenderer::Shader(OpenGLRenderer::Shader::ParseShader("res/shaders/vertex/basic.glsl", "res/shaders/fragment/lighting.glsl")));
         m_ShaderLight.reset(new OpenGLRenderer::Shader(OpenGLRenderer::Shader::ParseShader("res/shaders/vertex/basic.glsl", "res/shaders/fragment/basic_white.glsl")));
@@ -154,15 +158,17 @@ public:
 
         m_Model = glm::mat4(1.0f);
         m_ShaderMaterial->Bind();
+        m_ShaderMaterial->UploadUniformFloat3(glm::vec3(1.0f, 0.5f, 0.31f), "objectColor");
+        m_ShaderMaterial->UploadUniformFloat3(glm::vec3(1.0f, 1.0f, 1.0f), "lightColor");
         m_ShaderMaterial->UploadUniformMat4(m_Model, "u_Model");
-        m_Renderer->Draw(m_VertexArray, m_ShaderMaterial);
+        m_Renderer->Draw(m_VertexArrayMaterial, m_ShaderMaterial);
         
         glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
         m_Model = glm::translate(m_Model, lightPos);
         m_Model = glm::scale(m_Model, glm::vec3(0.2f));
         m_ShaderLight->Bind();
         m_ShaderLight->UploadUniformMat4(m_Model, "u_Model");
-        m_Renderer->Draw(m_VertexArray, m_ShaderLight);
+        m_Renderer->Draw(m_VertexArrayLight, m_ShaderLight);
 
         m_Renderer->EndScene();
         m_Framebuffer->Unbind();
@@ -202,7 +208,8 @@ private:
     std::unique_ptr<OpenGLRenderer::Renderer> m_Renderer;
     std::unique_ptr<OpenGLRenderer::Framebuffer> m_Framebuffer;
 
-    std::shared_ptr<OpenGLRenderer::VertexArray> m_VertexArray;
+    std::shared_ptr<OpenGLRenderer::VertexArray> m_VertexArrayMaterial;
+    std::shared_ptr<OpenGLRenderer::VertexArray> m_VertexArrayLight;
     std::shared_ptr<OpenGLRenderer::Texture> m_Texture;
     std::shared_ptr<OpenGLRenderer::VertexBuffer> m_VertexBuffer;
     std::shared_ptr<OpenGLRenderer::IndexBuffer> m_IndexBuffer;
