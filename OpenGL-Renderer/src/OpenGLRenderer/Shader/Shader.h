@@ -30,7 +30,7 @@ namespace OpenGLRenderer
 
 		void UploadUniformMat4(const glm::mat4& mat, const std::string& name) const;
 
-		static ShaderSource ParseShader(const std::string& filepath);
+		static ShaderSource ParseShader(const std::string& vertexPath, const std::string& fragmentPath);
 	private:
 		int GetLocation(const std::string& name) const;
 		unsigned int CompileShaders(const std::string& source, unsigned int type);

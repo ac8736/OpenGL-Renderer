@@ -83,11 +83,9 @@ public:
         m_IndexBuffer.reset(new OpenGLRenderer::IndexBuffer(indices, sizeof(indices) / sizeof(float)));
         m_VertexArray->SetIndexBuffer(m_IndexBuffer);
 
-        m_Shader.reset(new OpenGLRenderer::Shader(OpenGLRenderer::Shader::ParseShader("res/shaders/Basic.shader")));
+        m_Shader.reset(new OpenGLRenderer::Shader(OpenGLRenderer::Shader::ParseShader("res/shaders/vertex/basic.glsl", "res/shaders/fragment/basic.glsl")));
         m_Shader->Bind();
         m_Shader->UploadUniformFloat3(glm::vec3(1.0f, 1.0f, 1.0f), "u_Color");
-
-        m_Texture.reset(new OpenGLRenderer::Texture("res/textures/texture_test.png"));
 
         OpenGLRenderer::RenderCommands::EnableDepthTest();
     }
@@ -117,20 +115,15 @@ public:
 
     void Update() override
     {
-        glm::vec3 cubePositions[] = {
-            glm::vec3(0.0f,  0.0f,  0.0f),
-            glm::vec3(2.0f,  5.0f, -15.0f),
-            glm::vec3(-1.5f, -2.2f, -2.5f),
-            glm::vec3(-3.8f, -2.0f, -12.3f),
-            glm::vec3(2.4f, -0.4f, -3.5f),
-            glm::vec3(-1.7f,  3.0f, -7.5f),
-            glm::vec3(1.3f, -2.0f, -2.5f),
-            glm::vec3(1.5f,  2.0f, -2.5f),
-            glm::vec3(1.5f,  0.2f, -1.5f),
-            glm::vec3(-1.3f,  1.0f, -1.5f)
-        };
-
         const float cameraSpeed = 2.5f * m_DeltaTime;
+        if (OpenGLRenderer::Input::IsKeyPressed(KEY_SPACE, m_Window->GetWindow()))
+            std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
+            ->SetPosition(m_Camera->GetPosition() + cameraSpeed * std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraUp());
+
+        if (OpenGLRenderer::Input::IsKeyPressed(KEY_LEFT_SHIFT, m_Window->GetWindow()))
+            std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
+            ->SetPosition(m_Camera->GetPosition() - cameraSpeed * std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraUp());
+
         if (OpenGLRenderer::Input::IsKeyPressed(KEY_W, m_Window->GetWindow()))
             std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
                 ->SetPosition(m_Camera->GetPosition() + cameraSpeed * std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraFront());
@@ -159,26 +152,11 @@ public:
         m_Framebuffer->Bind();
 
         m_Renderer->BeginScene(*m_Camera);
-        m_Texture->Bind();
-        m_Texture->EnableBlend();
 
-        m_Shader->UploadUniformInt1(0, "u_Texture");
-        m_Shader->UploadUniformMat4(m_Transform, "u_Transform");
-
-        for (size_t i = 0; i < sizeof(cubePositions) / sizeof(glm::vec3); ++i)
-        {
-            m_Model = glm::mat4(1.0f);
-            m_Model = glm::translate(m_Model, cubePositions[i]);
-            float angle = 50.0f * m_LastFrameTime;
-            if (i % 2 == 0)
-                angle *= -1;
-
-            m_Model = glm::rotate(m_Model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-            m_Shader->UploadUniformMat4(m_Model, "u_Model");
-
-            m_Renderer->Draw(m_VertexArray, m_Shader);
-        }
- 
+        m_Model = glm::mat4(1.0f);
+        m_Shader->UploadUniformMat4(m_Model, "u_Model");
+        m_Renderer->Draw(m_VertexArray, m_Shader);
+        
         m_Renderer->EndScene();
         m_Framebuffer->Unbind();
     }

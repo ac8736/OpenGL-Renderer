@@ -36,7 +36,7 @@ namespace OpenGLRenderer
 		glUseProgram(m_RendererID);
 	}
 
-	ShaderSource Shader::ParseShader(const std::string& filepath)
+	ShaderSource Shader::ParseShader(const std::string& vertexPath, const std::string& fragmentPath)
 	{
 		enum ShaderType
 		{
@@ -44,34 +44,36 @@ namespace OpenGLRenderer
 		};
 
 		std::stringstream ss[2];
-		std::ifstream shaderFile(filepath);
-		if (shaderFile.is_open())
+
+		std::ifstream vertexShader(vertexPath);
+		if (vertexShader.is_open())
 		{
 			std::string line;
-			ShaderType type = ShaderType::None;
-			while (std::getline(shaderFile, line))
+			while (std::getline(vertexShader, line))
 			{
-				if (line.find("#shader") != std::string::npos)
-				{
-					if (line.find("vertex") != std::string::npos)
-					{
-						type = ShaderType::Vertex;
-					}
-					else if (line.find("fragment") != std::string::npos)
-					{
-						type = ShaderType::Fragment;
-					}
-				}
-				else
-				{
-					ss[type] << line << "\n";
-				}
+				ss[ShaderType::Vertex] << line << "\n";
 			}
 		}
 		else
 		{
-			CORE_WARN("Unable to open shader file: {0}", filepath);
+			CORE_WARN("Unable to open shader file: {0}", vertexPath);
 		}
+		vertexShader.close();
+
+		std::ifstream fragmentShader(fragmentPath);
+		if (fragmentShader.is_open())
+		{
+			std::string line;
+			while (std::getline(fragmentShader, line))
+			{
+				ss[ShaderType::Fragment] << line << "\n";
+			}
+		}
+		else
+		{
+			CORE_WARN("Unable to open shader file: {0}", fragmentPath);
+		}
+		fragmentShader.close();
 
 		return { ss[0].str(), ss[1].str() };
 	}
@@ -99,7 +101,7 @@ namespace OpenGLRenderer
 			// Use the infoLog as you see fit.
 			CORE_ERROR("{0}", infoLog.data());
 			CORE_ASSERT(false, "Shader compilation error!");
-			
+
 			return 0;
 		}
 
