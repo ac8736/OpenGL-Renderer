@@ -83,9 +83,8 @@ public:
         m_IndexBuffer.reset(new OpenGLRenderer::IndexBuffer(indices, sizeof(indices) / sizeof(float)));
         m_VertexArray->SetIndexBuffer(m_IndexBuffer);
 
-        m_Shader.reset(new OpenGLRenderer::Shader(OpenGLRenderer::Shader::ParseShader("res/shaders/vertex/basic.glsl", "res/shaders/fragment/basic.glsl")));
-        m_Shader->Bind();
-        m_Shader->UploadUniformFloat3(glm::vec3(1.0f, 1.0f, 1.0f), "u_Color");
+        m_ShaderMaterial.reset(new OpenGLRenderer::Shader(OpenGLRenderer::Shader::ParseShader("res/shaders/vertex/basic.glsl", "res/shaders/fragment/lighting.glsl")));
+        m_ShaderLight.reset(new OpenGLRenderer::Shader(OpenGLRenderer::Shader::ParseShader("res/shaders/vertex/basic.glsl", "res/shaders/fragment/basic_white.glsl")));
 
         OpenGLRenderer::RenderCommands::EnableDepthTest();
     }
@@ -154,9 +153,17 @@ public:
         m_Renderer->BeginScene(*m_Camera);
 
         m_Model = glm::mat4(1.0f);
-        m_Shader->UploadUniformMat4(m_Model, "u_Model");
-        m_Renderer->Draw(m_VertexArray, m_Shader);
+        m_ShaderMaterial->Bind();
+        m_ShaderMaterial->UploadUniformMat4(m_Model, "u_Model");
+        m_Renderer->Draw(m_VertexArray, m_ShaderMaterial);
         
+        glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+        m_Model = glm::translate(m_Model, lightPos);
+        m_Model = glm::scale(m_Model, glm::vec3(0.2f));
+        m_ShaderLight->Bind();
+        m_ShaderLight->UploadUniformMat4(m_Model, "u_Model");
+        m_Renderer->Draw(m_VertexArray, m_ShaderLight);
+
         m_Renderer->EndScene();
         m_Framebuffer->Unbind();
     }
@@ -199,7 +206,9 @@ private:
     std::shared_ptr<OpenGLRenderer::Texture> m_Texture;
     std::shared_ptr<OpenGLRenderer::VertexBuffer> m_VertexBuffer;
     std::shared_ptr<OpenGLRenderer::IndexBuffer> m_IndexBuffer;
-    std::shared_ptr<OpenGLRenderer::Shader> m_Shader;
+
+    std::shared_ptr<OpenGLRenderer::Shader> m_ShaderMaterial;
+    std::shared_ptr<OpenGLRenderer::Shader> m_ShaderLight;
 
     std::shared_ptr<OpenGLRenderer::Camera> m_Camera;
 };
