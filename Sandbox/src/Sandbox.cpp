@@ -89,8 +89,8 @@ public:
         m_VertexArrayMaterial->SetIndexBuffer(m_IndexBuffer);
         m_VertexArrayLight->SetIndexBuffer(m_IndexBuffer);
 
-        m_ShaderMaterial.reset(new OpenGLRenderer::Shader(OpenGLRenderer::Shader::ParseShader("res/shaders/vertex/basic.glsl", "res/shaders/fragment/lighting.glsl")));
-        m_ShaderLight.reset(new OpenGLRenderer::Shader(OpenGLRenderer::Shader::ParseShader("res/shaders/vertex/basic.glsl", "res/shaders/fragment/basic_white.glsl")));
+        m_ShaderMaterial.reset(new OpenGLRenderer::Shader(OpenGLRenderer::Shader::ParseShader("res/shaders/vertex/basic.glsl", "res/shaders/fragment/custom_material.glsl")));
+        m_ShaderLight.reset(new OpenGLRenderer::Shader(OpenGLRenderer::Shader::ParseShader("res/shaders/vertex/basic.glsl", "res/shaders/fragment/texture.glsl")));
 
         m_LightTexture.reset(new OpenGLRenderer::Texture("res/textures/glowstone.png"));
         m_MaterialTexture.reset(new OpenGLRenderer::Texture("res/textures/diamond_ore.png"));
@@ -162,7 +162,7 @@ public:
         m_Renderer->BeginScene(*m_Camera);
 
         lightPos.x = 2.0f * sin(m_LastFrameTime);
-        lightPos.y = 0.0f;
+        lightPos.y = -0.1f;
         lightPos.z = 1.5f * cos(m_LastFrameTime);
 
         m_Model = glm::mat4(1.0f);
@@ -170,6 +170,16 @@ public:
         m_MaterialTexture->Bind();
         m_ShaderMaterial->UploadUniformFloat3(glm::vec3(1.0f, 0.5f, 0.31f), "objectColor");
         m_ShaderMaterial->UploadUniformFloat3(glm::vec3(1.0f, 1.0f, 1.0f), "lightColor");
+
+        m_ShaderMaterial->UploadUniformFloat3(glm::vec3(1.0f, 0.5f, 0.31f), "material.ambient");
+        m_ShaderMaterial->UploadUniformFloat3(glm::vec3(1.0f, 0.5f, 0.31f), "material.diffuse");
+        m_ShaderMaterial->UploadUniformFloat3(glm::vec3(0.5f, 0.5f, 0.5f), "material.specular");
+        m_ShaderMaterial->UploadUniformFloat1(32.0f, "material.shininess");
+
+        m_ShaderMaterial->UploadUniformFloat3(glm::vec3(0.2f, 0.2f, 0.2f), "light.ambient");
+        m_ShaderMaterial->UploadUniformFloat3(glm::vec3(0.5f, 0.5f, 0.5f), "light.diffuse"); // darken diffuse light a bit
+        m_ShaderMaterial->UploadUniformFloat3(glm::vec3(1.0f, 1.0f, 1.0f), "light.specular");
+
         m_ShaderMaterial->UploadUniformMat4(m_Model, "u_Model");
         m_ShaderMaterial->UploadUniformFloat3(lightPos, "lightPos");
         m_ShaderMaterial->UploadUniformFloat3(m_Camera->GetPosition(), "viewPos");
