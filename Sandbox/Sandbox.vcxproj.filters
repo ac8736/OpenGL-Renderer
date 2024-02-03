@@ -7,5 +7,6 @@
     <None Include="res\shaders\fragment\white_color.glsl" />
     <None Include="res\shaders\vertex\basic.glsl" />
     <None Include="res\shaders\fragment\custom_material.glsl" />
+    <None Include="res\shaders\fragment\diffuse_maps.glsl" />
   </ItemGroup>
 </Project>

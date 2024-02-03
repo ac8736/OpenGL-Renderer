@@ -89,11 +89,12 @@ public:
         m_VertexArrayMaterial->SetIndexBuffer(m_IndexBuffer);
         m_VertexArrayLight->SetIndexBuffer(m_IndexBuffer);
 
-        m_ShaderMaterial.reset(new OpenGLRenderer::Shader(OpenGLRenderer::Shader::ParseShader("res/shaders/vertex/basic.glsl", "res/shaders/fragment/custom_material.glsl")));
+        m_ShaderMaterial.reset(new OpenGLRenderer::Shader(OpenGLRenderer::Shader::ParseShader("res/shaders/vertex/basic.glsl", "res/shaders/fragment/diffuse_maps.glsl")));
         m_ShaderLight.reset(new OpenGLRenderer::Shader(OpenGLRenderer::Shader::ParseShader("res/shaders/vertex/basic.glsl", "res/shaders/fragment/texture.glsl")));
 
         m_LightTexture.reset(new OpenGLRenderer::Texture("res/textures/glowstone.png"));
-        m_MaterialTexture.reset(new OpenGLRenderer::Texture("res/textures/diamond_ore.png"));
+        m_MaterialTexture.reset(new OpenGLRenderer::Texture("res/textures/container.png"));
+        m_MetalFrameTexture.reset(new OpenGLRenderer::Texture("res/textures/container_specular.png"));
 
         OpenGLRenderer::RenderCommands::EnableDepthTest();
     }
@@ -123,37 +124,40 @@ public:
 
     void Update() override
     {
-        const float cameraSpeed = 2.5f * m_DeltaTime;
-        if (OpenGLRenderer::Input::IsKeyPressed(KEY_SPACE, m_Window->GetWindow()))
-            std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
-            ->SetPosition(m_Camera->GetPosition() + cameraSpeed * std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraUp());
+        if (SceneFocused)
+        {
+            const float cameraSpeed = 2.5f * m_DeltaTime;
+            if (OpenGLRenderer::Input::IsKeyPressed(KEY_SPACE, m_Window->GetWindow()))
+                std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
+                ->SetPosition(m_Camera->GetPosition() + cameraSpeed * std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraUp());
 
-        if (OpenGLRenderer::Input::IsKeyPressed(KEY_LEFT_SHIFT, m_Window->GetWindow()))
-            std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
-            ->SetPosition(m_Camera->GetPosition() - cameraSpeed * std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraUp());
+            if (OpenGLRenderer::Input::IsKeyPressed(KEY_LEFT_SHIFT, m_Window->GetWindow()))
+                std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
+                ->SetPosition(m_Camera->GetPosition() - cameraSpeed * std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraUp());
 
-        if (OpenGLRenderer::Input::IsKeyPressed(KEY_W, m_Window->GetWindow()))
-            std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
+            if (OpenGLRenderer::Input::IsKeyPressed(KEY_W, m_Window->GetWindow()))
+                std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
                 ->SetPosition(m_Camera->GetPosition() + cameraSpeed * std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraFront());
 
-        if (OpenGLRenderer::Input::IsKeyPressed(KEY_S, m_Window->GetWindow()))
-            std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
+            if (OpenGLRenderer::Input::IsKeyPressed(KEY_S, m_Window->GetWindow()))
+                std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
                 ->SetPosition(m_Camera->GetPosition() - cameraSpeed * std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraFront());
 
-        if (OpenGLRenderer::Input::IsKeyPressed(KEY_A, m_Window->GetWindow()))
-            std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
+            if (OpenGLRenderer::Input::IsKeyPressed(KEY_A, m_Window->GetWindow()))
+                std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
                 ->SetPosition(m_Camera->GetPosition() - glm::normalize(glm::cross(std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraFront(),
                     std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraUp())) * cameraSpeed);
 
-        if (OpenGLRenderer::Input::IsKeyPressed(KEY_D, m_Window->GetWindow()))
-            std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
-                ->SetPosition(m_Camera->GetPosition() + glm::normalize(glm::cross(std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraFront(), 
+            if (OpenGLRenderer::Input::IsKeyPressed(KEY_D, m_Window->GetWindow()))
+                std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
+                ->SetPosition(m_Camera->GetPosition() + glm::normalize(glm::cross(std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraFront(),
                     std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)->GetCameraUp())) * cameraSpeed);
 
-        if (OpenGLRenderer::Input::IsMousePressed(MOUSE_BUTTON_1, m_Window->GetWindow()))
-        {
-            std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
-                ->MouseMovement(OpenGLRenderer::Input::GetMousePosX(m_Window->GetWindow()), OpenGLRenderer::Input::GetMousePosY(m_Window->GetWindow()));
+            if (OpenGLRenderer::Input::IsMousePressed(MOUSE_BUTTON_1, m_Window->GetWindow()))
+            {
+                std::dynamic_pointer_cast<OpenGLRenderer::PerspectiveCamera>(m_Camera)
+                    ->MouseMovement(OpenGLRenderer::Input::GetMousePosX(m_Window->GetWindow()), OpenGLRenderer::Input::GetMousePosY(m_Window->GetWindow()));
+            }
         }
 
         OpenGLRenderer::RenderCommands::Clear();
@@ -161,18 +165,15 @@ public:
 
         m_Renderer->BeginScene(*m_Camera);
 
-        lightPos.x = 2.0f * sin(m_LastFrameTime);
-        lightPos.y = -0.1f;
-        lightPos.z = 1.5f * cos(m_LastFrameTime);
-
         m_Model = glm::mat4(1.0f);
         m_ShaderMaterial->Bind();
-        m_MaterialTexture->Bind();
         m_ShaderMaterial->UploadUniformFloat3(glm::vec3(1.0f, 0.5f, 0.31f), "objectColor");
         m_ShaderMaterial->UploadUniformFloat3(glm::vec3(1.0f, 1.0f, 1.0f), "lightColor");
 
         m_ShaderMaterial->UploadUniformFloat3(glm::vec3(1.0f, 0.5f, 0.31f), "material.ambient");
-        m_ShaderMaterial->UploadUniformFloat3(glm::vec3(1.0f, 0.5f, 0.31f), "material.diffuse");
+        m_ShaderMaterial->UploadUniformInt1(0, "material.diffuse");
+        m_ShaderMaterial->UploadUniformInt1(1, "material.specular");
+        m_ShaderMaterial->UploadUniformInt1(2, "material.emission");
         m_ShaderMaterial->UploadUniformFloat3(glm::vec3(0.5f, 0.5f, 0.5f), "material.specular");
         m_ShaderMaterial->UploadUniformFloat1(32.0f, "material.shininess");
 
@@ -183,8 +184,11 @@ public:
         m_ShaderMaterial->UploadUniformMat4(m_Model, "u_Model");
         m_ShaderMaterial->UploadUniformFloat3(lightPos, "lightPos");
         m_ShaderMaterial->UploadUniformFloat3(m_Camera->GetPosition(), "viewPos");
+        m_MaterialTexture->Bind(0);
+        m_MetalFrameTexture->Bind(1);
         m_Renderer->Draw(m_VertexArrayMaterial, m_ShaderMaterial);
         m_MaterialTexture->Unbind();
+        m_MetalFrameTexture->Unbind();
         
         m_Model = glm::translate(m_Model, lightPos);
         m_Model = glm::scale(m_Model, glm::vec3(0.2f));
@@ -211,15 +215,18 @@ public:
         }
         uint32_t textureID = m_Framebuffer->GetTextureColorID();
         ImGui::Image((void*)textureID, ImVec2{ viewportPanelSize.x, viewportPanelSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+        SceneFocused = ImGui::IsWindowFocused();
         ImGui::End();
         
         static bool triangleDraw = false;
 
         ImGui::Begin("Properties");
 
-        if (ImGui::CollapsingHeader("Draw Mode"))
+        if (ImGui::CollapsingHeader("Light Source"))
         {
-            ImGui::Checkbox("Triangles", &triangleDraw);
+            ImGui::SliderFloat("Position X", &lightPos.x, -2.0f, 2.0);
+            ImGui::SliderFloat("Position Y", &lightPos.y, -2.0f, 2.0);
+            ImGui::SliderFloat("Position Z", &lightPos.z, -2.0f, 2.0);
         }
 
         ImGui::End();
@@ -240,6 +247,7 @@ private:
 
     std::shared_ptr<OpenGLRenderer::Texture> m_LightTexture;
     std::shared_ptr<OpenGLRenderer::Texture> m_MaterialTexture;
+    std::shared_ptr<OpenGLRenderer::Texture> m_MetalFrameTexture;
 
     std::shared_ptr<OpenGLRenderer::VertexBuffer> m_VertexBuffer;
     std::shared_ptr<OpenGLRenderer::IndexBuffer> m_IndexBuffer;
@@ -248,6 +256,8 @@ private:
     std::shared_ptr<OpenGLRenderer::Shader> m_ShaderLight;
 
     std::shared_ptr<OpenGLRenderer::Camera> m_Camera;
+
+    bool SceneFocused = false;
 };
 
 OpenGLRenderer::Application* OpenGLRenderer::CreateApplication() { return new Sandbox(); }
