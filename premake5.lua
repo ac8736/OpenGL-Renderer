@@ -12,11 +12,13 @@ IncludeDir["Glad"] = "OpenGL-Renderer/vendor/Glad/include"
 IncludeDir["ImGui"] = "OpenGL-Renderer/vendor/imgui"
 IncludeDir["glm"] = "OpenGL-Renderer/vendor/glm"
 IncludeDir["stb_image"] = "OpenGL-Renderer/vendor/stb_image"
+IncludeDir["assimp"] = "OpenGL-Renderer/vendor/assimp/include"
 
 group "Dependencies"
 	include "OpenGL-Renderer/vendor/GLFW"
 	include "OpenGL-Renderer/vendor/Glad"
 	include "OpenGL-Renderer/vendor/imgui"
+	include "OpenGL-Renderer/vendor/assimp"
 group ""
 
 project "OpenGL-Renderer"
@@ -48,13 +50,15 @@ project "OpenGL-Renderer"
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.stb_image}"
+		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.assimp}"
 	}
 
 	links {
 		"Glad",
 		"ImGui",
 		"GLFW",
+		"assimp",
 		"opengl32.lib",
 	}
 
@@ -100,6 +104,7 @@ project "Sandbox"
 		"%{IncludeDir.spdlog}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.assimp}",
 		"OpenGL-Renderer/src"
 	}
 

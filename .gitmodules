@@ -13,3 +13,6 @@
 [submodule "OpenGL-Renderer/vendor/imgui"]
 	path = OpenGL-Renderer/vendor/imgui
 	url = https://github.com/ac8736/imgui
+[submodule "OpenGL-Renderer/vendor/assimp"]
+	path = OpenGL-Renderer/vendor/assimp
+	url = https://github.com/AminAliari/assimp

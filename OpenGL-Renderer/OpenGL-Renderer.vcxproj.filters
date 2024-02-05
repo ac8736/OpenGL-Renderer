@@ -13,8 +13,20 @@
     <Filter Include="src\OpenGLRenderer\Camera">
       <UniqueIdentifier>{B09ACCB4-1C5D-003F-650D-8FCBD10ED91C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\OpenGLRenderer\Log">
-      <UniqueIdentifier>{09092F00-F502-5852-DE6F-EE62CA08BEBE}</UniqueIdentifier>
+    <Filter Include="src\OpenGLRenderer\Events">
+      <UniqueIdentifier>{1CB2EEBA-8874-2245-D124-B1D13D26FB22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\OpenGLRenderer\Framebuffer">
+      <UniqueIdentifier>{6CDA6A4C-5800-35B3-4146-BA7E2D0B5A7F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\OpenGLRenderer\ImGui">
+      <UniqueIdentifier>{6294DDC7-4EB9-2C48-7704-12D863882B66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\OpenGLRenderer\Inputs">
+      <UniqueIdentifier>{8AB6B8C3-F678-EC4D-3F29-7BDAAB2AC52B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\OpenGLRenderer\RenderCommands">
+      <UniqueIdentifier>{B977CDD7-25E6-2257-6ECF-DD56DA7C18F3}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\OpenGLRenderer\Shader">
       <UniqueIdentifier>{DE3597DA-4AF8-CA64-93A8-59F1FFA9A342}</UniqueIdentifier>
@@ -63,14 +75,44 @@
     <ClInclude Include="src\OpenGLRenderer\Camera\OrthographicCamera.h">
       <Filter>src\OpenGLRenderer\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="src\OpenGLRenderer\Camera\PerspectiveCamera.h">
+      <Filter>src\OpenGLRenderer\Camera</Filter>
+    </ClInclude>
     <ClInclude Include="src\OpenGLRenderer\Core.h">
       <Filter>src\OpenGLRenderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\OpenGLRenderer\Log\Log.h">
-      <Filter>src\OpenGLRenderer\Log</Filter>
+    <ClInclude Include="src\OpenGLRenderer\Events\ApplicationEvent.h">
+      <Filter>src\OpenGLRenderer\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OpenGLRenderer\Events\Event.h">
+      <Filter>src\OpenGLRenderer\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OpenGLRenderer\Events\KeyEvent.h">
+      <Filter>src\OpenGLRenderer\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OpenGLRenderer\Events\MouseEvent.h">
+      <Filter>src\OpenGLRenderer\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OpenGLRenderer\Framebuffer\Framebuffer.h">
+      <Filter>src\OpenGLRenderer\Framebuffer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OpenGLRenderer\ImGui\ImGuiLayer.h">
+      <Filter>src\OpenGLRenderer\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OpenGLRenderer\Inputs\Input.h">
+      <Filter>src\OpenGLRenderer\Inputs</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OpenGLRenderer\KeyCodes.h">
+      <Filter>src\OpenGLRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OpenGLRenderer\MouseCodes.h">
+      <Filter>src\OpenGLRenderer</Filter>
     </ClInclude>
     <ClInclude Include="src\OpenGLRenderer\OpenGLRenderer.h">
       <Filter>src\OpenGLRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OpenGLRenderer\RenderCommands\RenderCommands.h">
+      <Filter>src\OpenGLRenderer\RenderCommands</Filter>
     </ClInclude>
     <ClInclude Include="src\OpenGLRenderer\Renderer.h">
       <Filter>src\OpenGLRenderer</Filter>
@@ -86,6 +128,9 @@
     </ClInclude>
     <ClInclude Include="src\OpenGLRenderer\VertexArray\VertexArray.h">
       <Filter>src\OpenGLRenderer\VertexArray</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OpenGLRenderer\Window.h">
+      <Filter>src\OpenGLRenderer</Filter>
     </ClInclude>
     <ClInclude Include="src\glpch.h">
       <Filter>src</Filter>
@@ -924,14 +969,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\OpenGLRenderer\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\OpenGLRenderer\Inputs\Input.h" />
-    <ClInclude Include="src\OpenGLRenderer\RenderCommands\RenderCommands.h" />
-    <ClInclude Include="src\OpenGLRenderer\Window.h" />
-    <ClInclude Include="src\OpenGLRenderer\Framebuffer\Framebuffer.h" />
-    <ClInclude Include="src\OpenGLRenderer\Camera\PerspectiveCamera.h" />
-    <ClInclude Include="src\OpenGLRenderer\KeyCodes.h" />
-    <ClInclude Include="src\OpenGLRenderer\MouseCodes.h" />
+    <ClInclude Include="src\OpenGLRenderer\Log\Log.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\OpenGLRenderer\Application.cpp">
@@ -943,8 +981,23 @@
     <ClCompile Include="src\OpenGLRenderer\Camera\OrthographicCamera.cpp">
       <Filter>src\OpenGLRenderer\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="src\OpenGLRenderer\Log\Log.cpp">
-      <Filter>src\OpenGLRenderer\Log</Filter>
+    <ClCompile Include="src\OpenGLRenderer\Camera\PerspectiveCamera.cpp">
+      <Filter>src\OpenGLRenderer\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpenGLRenderer\Framebuffer\Framebuffer.cpp">
+      <Filter>src\OpenGLRenderer\Framebuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpenGLRenderer\ImGui\ImGuiBuild.cpp">
+      <Filter>src\OpenGLRenderer\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpenGLRenderer\ImGui\ImGuiLayer.cpp">
+      <Filter>src\OpenGLRenderer\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpenGLRenderer\Inputs\Input.cpp">
+      <Filter>src\OpenGLRenderer\Inputs</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpenGLRenderer\RenderCommands\RenderCommands.cpp">
+      <Filter>src\OpenGLRenderer\RenderCommands</Filter>
     </ClCompile>
     <ClCompile Include="src\OpenGLRenderer\Renderer.cpp">
       <Filter>src\OpenGLRenderer</Filter>
@@ -958,18 +1011,15 @@
     <ClCompile Include="src\OpenGLRenderer\VertexArray\VertexArray.cpp">
       <Filter>src\OpenGLRenderer\VertexArray</Filter>
     </ClCompile>
+    <ClCompile Include="src\OpenGLRenderer\Window.cpp">
+      <Filter>src\OpenGLRenderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\glpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\OpenGLRenderer\ImGui\ImGuiBuild.cpp" />
-    <ClCompile Include="src\OpenGLRenderer\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\OpenGLRenderer\Inputs\Input.cpp" />
-    <ClCompile Include="src\OpenGLRenderer\RenderCommands\RenderCommands.cpp" />
-    <ClCompile Include="src\OpenGLRenderer\Window.cpp" />
-    <ClCompile Include="src\OpenGLRenderer\Framebuffer\Framebuffer.cpp" />
-    <ClCompile Include="src\OpenGLRenderer\Camera\PerspectiveCamera.cpp" />
+    <ClCompile Include="src\OpenGLRenderer\Log\Log.cpp" />
   </ItemGroup>
 </Project>

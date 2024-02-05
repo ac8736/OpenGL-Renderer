@@ -1,7 +1,7 @@
 #include "glpch.h"
 
 #include "Application.h"
-#include "Log/Log.h"
+#include "OpenGLRenderer/Log/Log.h"
 #include "Shader/Shader.h"
 #include "Buffers/Buffer.h"
 #include "VertexArray/VertexArray.h"
